@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\BuildsRepository;
+use App\Repository\ListTutorialsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BuildsRepository::class)]
-class Builds
+#[ORM\Entity(repositoryClass: ListTutorialsRepository::class)]
+class ListTutorials
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +18,7 @@ class Builds
     /**
      * @var Collection<int, Tutorial>
      */
-    #[ORM\OneToMany(targetEntity: Tutorial::class, mappedBy: 'builds', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Tutorial::class, mappedBy: 'listTutorials', orphanRemoval: true, cascade: ['persist'])]
     private Collection $tutorials;
 
     #[ORM\Column(length: 255)]
@@ -27,6 +27,10 @@ class Builds
     public function __construct()
     {
         $this->tutorials = new ArrayCollection();
+    }
+    
+    public function __toString(){
+        return "author : " . $this->author; 
     }
 
     public function getId(): ?int
@@ -46,7 +50,7 @@ class Builds
     {
         if (!$this->tutorials->contains($tutorial)) {
             $this->tutorials->add($tutorial);
-            $tutorial->setBuilds($this);
+            $tutorial->setListTutorials($this);
         }
 
         return $this;
@@ -56,8 +60,8 @@ class Builds
     {
         if ($this->tutorials->removeElement($tutorial)) {
             // set the owning side to null (unless already changed)
-            if ($tutorial->getBuilds() === $this) {
-                $tutorial->setBuilds(null);
+            if ($tutorial->getListTutorials() === $this) {
+                $tutorial->setListTutorials(null);
             }
         }
 

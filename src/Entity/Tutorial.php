@@ -18,7 +18,7 @@ class Tutorial
 
     #[ORM\ManyToOne(inversedBy: 'tutorials')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Builds $builds = null;
+    private ?ListTutorials $listTutorials = null;
 
     #[ORM\Column(length: 255)]
     private ?string $author = null;
@@ -40,14 +40,14 @@ class Tutorial
         return $this;
     }
 
-    public function getBuilds(): ?Builds
+    public function getListTutorials(): ?ListTutorials
     {
-        return $this->builds;
+        return $this->listTutorials;
     }
 
-    public function setBuilds(?Builds $builds): static
+    public function setListTutorials(?ListTutorials $listTutorials): static
     {
-        $this->builds = $builds;
+        $this->listTutorials = $listTutorials;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Builds;
+use App\Entity\ListTutorials;
 use App\Entity\Tutorial;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -10,10 +10,10 @@ use Doctrine\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
     /**
-     * Generates initialization data for builds : [author]
+     * Generates initialization data for list of tutorials : [author]
      * @return \\Generator
      */
-    private static function buildsDataGenerator()
+    private static function listTutorialsGenerator()
     {
         yield ["user1"];
         yield ["user2"];
@@ -21,10 +21,10 @@ class AppFixtures extends Fixture
     }
     
     /**
-     * Generates initialization data for tutorials of builds: [name, author]
+     * Generates initialization data for tutorials : [name, author]
      * @return \\Generator
      */
-    private static function buildsTutorialsGenerator()
+    private static function tutorialsGenerator()
     {
         yield ["Fantasy House", "user1"];
         yield ["Well", "user1"];
@@ -39,29 +39,29 @@ class AppFixtures extends Fixture
     {
         
         // Loading of test Builds
-        foreach (self::buildsDataGenerator() as [$author] ) {
-            $builds = new Builds();
-            $builds->setAuthor($author);
-            $manager->persist($builds);
+        foreach (self::listTutorialsGenerator() as [$author] ) {
+            $listTutorials = new ListTutorials();
+            $listTutorials->setAuthor($author);
+            $manager->persist($listTutorials);
         }
         $manager->flush();
         
         
         // Loading of test Tutorials
-        $buildsRepo = $manager->getRepository(Builds::class);
+        $listTutorialsRepo = $manager->getRepository(ListTutorials::class);
         
-        foreach (self::buildsTutorialsGenerator() as [$name, $author])
+        foreach (self::tutorialsGenerator() as [$name, $author])
         {
-            $builds = $buildsRepo->findOneBy(['author' => $author]);
+            $listTutorials = $listTutorialsRepo->findOneBy(['author' => $author]);
             
             $tutorial = new Tutorial();
             $tutorial->setAuthor($author);
             $tutorial->setName($name);
             
-            $builds->addTutorial($tutorial);
+            $listTutorials->addTutorial($tutorial);
             
             // there's a cascade persist on film-recommendations which avoids persisting down the relation
-            $manager->persist($builds);
+            $manager->persist($listTutorials);
         }
         $manager->flush();
     }
