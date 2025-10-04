@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{# Show all list of tutorials #}
+	<h1>All tutorials</h1>
+	
+	<ul>
+        {% for tutorial in tutorials %}
+        
+        	<li> <a href={{ path('tutorial_show', {'id': tutorial.id}) }}> {{ tutorial.name }} </a> </li>
+       
+        {% endfor %}
+    </ul>
+	
+{% endblock %} {# body #} 

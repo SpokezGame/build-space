@@ -18,30 +18,9 @@ final class ListTutorialsController extends AbstractController
     #[Route('/list/tutorials', name: 'list_tutorials_all')]
     public function index(ListTutorialsRepository $listTutorialsRepository): Response
     {
-        $htmlpage = '<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Liste des tutoriels</title>
-    </head>
-    <body>
-        <h1>Liste des tutoriels :</h1>
-        <ul>';
-        
         $listsTutorials = $listTutorialsRepository->findAll();
-        foreach($listsTutorials as $listTutorials) {
-            $htmlpage .= '<li><a href=' . $this->generateUrl('list_tutorials_show', ['id' => $listTutorials->getId()]) . '>'.  $listTutorials->getAuthor() .'</a></li>';
-        }
         
-        $htmlpage .= '</ul>';
-        
-        $htmlpage .= '</body></html>';
-        
-        return new Response(
-            $htmlpage,
-            Response::HTTP_OK,
-            array('content-type' => 'text/html')
-            );
+        return $this->render('list_tutorials/index.html.twig', ['lists_tutorials' => $listsTutorials]);
     }
     
     /**
@@ -53,14 +32,12 @@ final class ListTutorialsController extends AbstractController
     public function show(ManagerRegistry $doctrine, $id) : Response
     {
         $entityManager= $doctrine->getManager();
-        
+               
         $listTutorials = $entityManager->getRepository(ListTutorials::class)->findOneBy(['id' => $id]);
         
-        dump($listTutorials);
+        $tutorials = $entityManager->getRepository(Tutorial::class)->findBy(['listTutorials' => $listTutorials]);
         
-        dump($entityManager->getRepository(ListTutorials::class)->findAll());
-        dump($entityManager->getRepository(Tutorial::class)->findAll());
-        return $this->render('list_tutorials/index.html.twig', ['list_tutorials' => $listTutorials]);
+        return $this->render('list_tutorials/show.html.twig', ['tutorials' => $tutorials]);
     }
     
 
