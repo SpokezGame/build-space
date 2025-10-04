@@ -46,17 +46,16 @@ class ListTutorials
         return $this->tutorials;
     }
 
-    public function addTutorial(Tutorial $tutorial): static
+    public function addTutorial(Tutorial $tutorial)
     {
         if (!$this->tutorials->contains($tutorial)) {
             $this->tutorials->add($tutorial);
             $tutorial->setListTutorials($this);
         }
-
         return $this;
     }
 
-    public function removeTutorial(Tutorial $tutorial): static
+    public function removeTutorial(Tutorial $tutorial)
     {
         if ($this->tutorials->removeElement($tutorial)) {
             // set the owning side to null (unless already changed)
@@ -73,7 +72,7 @@ class ListTutorials
         return $this->author;
     }
 
-    public function setAuthor(string $author): static
+    public function setAuthor(string $author)
     {
         $this->author = $author;
 

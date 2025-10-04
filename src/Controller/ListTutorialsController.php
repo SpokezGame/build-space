@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ListTutorials;
+use App\Entity\Tutorial;
 use App\Repository\ListTutorialsRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,33 +52,15 @@ final class ListTutorialsController extends AbstractController
     #[Route('/list/tutorials/{id}', name: 'list_tutorials_show', requirements: ['id' => '\d+'])]
     public function show(ManagerRegistry $doctrine, $id) : Response
     {
-        $listTutorialsRepo = $doctrine->getRepository(ListTutorials::class);
-        $listTutorials = $listTutorialsRepo->find($id);
+        $entityManager= $doctrine->getManager();
         
-        if (!$listTutorials) {
-            throw $this->createNotFoundException('The list of tutorials does not exist');
-        }
+        $listTutorials = $entityManager->getRepository(ListTutorials::class)->findOneBy(['id' => $id]);
         
-        $res = '<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Liste des tutoriels de ' . $listTutorials->getAuthor() . '</title>
-    </head>
-    <body>
-        <h1>Liste des tutoriels de ' . $listTutorials->getAuthor() . ' :</h1>
-        <ul>';
+        dump($listTutorials);
         
-        foreach($listTutorials->getTutorials() as $tutorial){
-            $res .= '<li>' . $tutorial->getName() . '</li>';
-        }
-        
-        $res .= '</ul>';
-
-        $res .= '<p/><a href="' . $this->generateUrl('list_tutorials_all') . '">Back</a>
-</body></html>';
-        
-        return new Response($res);
+        dump($entityManager->getRepository(ListTutorials::class)->findAll());
+        dump($entityManager->getRepository(Tutorial::class)->findAll());
+        return $this->render('list_tutorials/index.html.twig', ['list_tutorials' => $listTutorials]);
     }
     
 

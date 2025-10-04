@@ -12,10 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:list-builds',
+    name: 'app:lists-tutorials',
     description: 'Command that shows list of list of tutorials',
 )]
-class ListBuildsCommand extends Command
+class ListsTutorialsCommand extends Command
 {
     private ?ListTutorialsRepository $listTutorialsRepository;
     

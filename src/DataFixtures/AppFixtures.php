@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
      * Generates initialization data for tutorials : [name, author]
      * @return \\Generator
      */
-    private static function tutorialsGenerator()
+    private static function tutorialGenerator()
     {
         yield ["Fantasy House", "user1"];
         yield ["Well", "user1"];
@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager) : void
     {
         
-        // Loading of test Builds
+        // Loading of test Tutorials
         foreach (self::listTutorialsGenerator() as [$author] ) {
             $listTutorials = new ListTutorials();
             $listTutorials->setAuthor($author);
@@ -47,10 +47,10 @@ class AppFixtures extends Fixture
         $manager->flush();
         
         
-        // Loading of test Tutorials
+        // Loading of test ListTutorials
         $listTutorialsRepo = $manager->getRepository(ListTutorials::class);
         
-        foreach (self::tutorialsGenerator() as [$name, $author])
+        foreach (self::tutorialGenerator() as [$name, $author])
         {
             $listTutorials = $listTutorialsRepo->findOneBy(['author' => $author]);
             
@@ -59,8 +59,7 @@ class AppFixtures extends Fixture
             $tutorial->setName($name);
             
             $listTutorials->addTutorial($tutorial);
-            
-            // there's a cascade persist on film-recommendations which avoids persisting down the relation
+            // there's a cascade persist on listTutorials
             $manager->persist($listTutorials);
         }
         $manager->flush();

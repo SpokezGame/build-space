@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ListTutorialsController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<h1>Tutoriels proposés par {{ list_tutorials.author }}</h1>
+    
+    <table class="table">
+        <tbody>
+        	{% for tutorial in list_tutorials %}
+                <tr>
+                    <th>ID</th>
+                    <td>{{ tutorial.id }}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>{{ tutorial.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/spokez/cours/CSC4101/build-space/build-space/src/Controller/ListTutorialsController.php</code></li>
-        <li>Your template at <code>/home/spokez/cours/CSC4101/build-space/build-space/templates/list_tutorials/index.html.twig</code></li>
-    </ul>
-</div>
-{% endblock %}
+    <a href="{{ path('list_tutorials_all') }}">Revenir à la liste des auteurs</a>
+	
+{% endblock %} {# body #} 
