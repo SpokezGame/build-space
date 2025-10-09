@@ -1,0 +1,10 @@
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        todos:
+          label: 'Tutorials'
+          route: 'tutorial_all'
+        tags:
+          label: 'Authors'
+          route: 'list_tutorials_all'  
