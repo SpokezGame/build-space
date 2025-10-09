@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block main %}
 	{# Show tutorials of an author #}
-	<h1>Tutorials from {{ tutorials[0].author }}</h1>
+	<h3>Tutorials from {{ tutorials[0].author }}</h3>
 	
 	<ul>
         {% for tutorial in tutorials %}

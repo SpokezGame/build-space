@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block main %}
 	{# Show the details of a tutorial #}
-	<h1>Tutorial : {{ tutorial.name }} - {{ tutorial.author }}</h1>
+	<h3>Tutorial : {{ tutorial.name }} - {{ tutorial.author }}</h3>
 	
 	<ul>
         
@@ -10,7 +10,7 @@
         <li> Name : {{ tutorial.name }} </li>
 
     </ul>
-
-    <a href="{{ path('list_tutorials_show', {'id': tutorial.listTutorials.id}) }}">Back to the list of tutorials of {{ tutorial.author }}</a>
+	
+    <a href="{{ path('index') }}">Back</a>
 	
 {% endblock %} {# body #} 

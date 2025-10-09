@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block main %}
 	{# Show all list of tutorials #}
-	<h1>Lists of tutorials</h1>
+	<h3>Lists of tutorials</h3>
 	
 	<ul>
         {% for list_tutorials in lists_tutorials %}
         
-        	<li> <a href={{ path('list_tutorials_show', {'id': list_tutorials.id}) }}> {{ list_tutorials.author }} </a> </li>
+        	<li> From <a href={{ path('list_tutorials_show', {'id': list_tutorials.id}) }} class="redirection"> {{ list_tutorials.author }} </a> </li>
        
         {% endfor %}
     </ul>

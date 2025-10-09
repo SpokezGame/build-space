@@ -10,6 +10,24 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ 
+ /* Custom preset */
+
+#main_content {
+	background-color: #F5F5F5;
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 100vh;
+	padding: 2% 2%;
+}
+
+.redirection {
+	font-weight: bold;
+}
+
+/* Template */
+ 
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -8156,7 +8174,8 @@ textarea.form-control-lg {
 
 .bg-light {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+  /*background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;*/
+  background-color: #CDEDC5; 
 }
 
 .bg-dark {
