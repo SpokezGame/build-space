@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TutorialSet index{% endblock %}
+
+{% block main %}
+    <h1>TutorialSet index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tutorial_set in tutorial_sets %}
+            <tr>
+                <td>{{ tutorial_set.id }}</td>
+                <td>{{ tutorial_set.name }}</td>
+                <td>
+                    <a href="{{ path('app_tutorial_set_show', {'id': tutorial_set.id}) }}">show</a>
+                    <a href="{{ path('app_tutorial_set_edit', {'id': tutorial_set.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tutorial_set_new') }}">Create new</a>
+{% endblock %}

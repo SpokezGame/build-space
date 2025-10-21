@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ListTutorials;
+use App\Entity\TutorialLibrary;
 use App\Entity\Tutorial;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -10,10 +10,10 @@ use Doctrine\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
     /**
-     * Generates initialization data for list of tutorials : [author]
+     * Generates initialization data for TutorialLibraries : [author]
      * @return \\Generator
      */
-    private static function listTutorialsGenerator()
+    private static function tutorialLibraryGenerator()
     {
         yield ["user1"];
         yield ["user2"];
@@ -39,28 +39,28 @@ class AppFixtures extends Fixture
     {
         
         // Loading of test Tutorials
-        foreach (self::listTutorialsGenerator() as [$author] ) {
-            $listTutorials = new ListTutorials();
-            $listTutorials->setAuthor($author);
-            $manager->persist($listTutorials);
+        foreach (self::tutorialLibraryGenerator() as [$author] ) {
+            $tutorialLibrary = new TutorialLibrary();
+            $tutorialLibrary->setAuthor($author);
+            $manager->persist($tutorialLibrary);
         }
         $manager->flush();
         
         
         // Loading of test ListTutorials
-        $listTutorialsRepo = $manager->getRepository(ListTutorials::class);
+        $tutorialLibraryRepo = $manager->getRepository(TutorialLibrary::class);
         
         foreach (self::tutorialGenerator() as [$name, $author])
         {
-            $listTutorials = $listTutorialsRepo->findOneBy(['author' => $author]);
+            $tutorialLibrary = $tutorialLibraryRepo->findOneBy(['author' => $author]);
             
             $tutorial = new Tutorial();
             $tutorial->setAuthor($author);
             $tutorial->setName($name);
             
-            $listTutorials->addTutorial($tutorial);
-            // there's a cascade persist on listTutorials
-            $manager->persist($listTutorials);
+            $tutorialLibrary->addTutorial($tutorial);
+            // there's a cascade persist on tutorialLibrary
+            $manager->persist($tutorialLibrary);
         }
         $manager->flush();
     }

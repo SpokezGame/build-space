@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TutorialLibrary{% endblock %}
+
+{% block main %}
+    <h1>TutorialLibrary</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tutorial_library.id }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ tutorial_library.author }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tutorial_library_index') }}">back to list</a>
+
+    <a href="{{ path('app_tutorial_library_edit', {'id': tutorial_library.id}) }}">edit</a>
+
+    {{ include('tutorial_library/_delete_form.html.twig') }}
+{% endblock %}

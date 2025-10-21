@@ -2,9 +2,12 @@ bootstrap_menu:
   menus:
     main:
       items:
-        todos:
+        tutorials:
           label: 'Tutorials'
-          route: 'tutorial_all'
-        tags:
-          label: 'Authors'
-          route: 'list_tutorials_all'  
+          route: 'app_tutorial_index'
+        tutorial_libraries:
+          label: 'TutorialLibraries'
+          route: 'app_tutorial_library_index'
+        tutorial_sets:
+          label: 'TutorialSets'
+          route: 'app_tutorial_set_index'

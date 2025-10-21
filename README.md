@@ -31,11 +31,14 @@ To re-load the fixtures execute :
 
 # 3) Model
 
-This website currently uses 2 entity : Tutorial ([Objet]) and ListTutorial ([Inventaire]). 
+This website currently uses 3 entities : Tutorial ([Objet]), TutorialLibrary ([Inventaire])
+and TutorialSet ([Gallerie]). 
 
 - The goal of Tutorial is obvious.
 
-- The goal of ListTutorial is to list the tutorials of one author.
+- The goal of TutorialLibrary is to list the tutorials of one author.
+
+- The goal of TutorialSet is to create a collection tutorials, sorted by a specific theme.
 
 # 4) Routes
 
@@ -45,8 +48,12 @@ localhost:8000/
 
 - The list of all Tutorial entities can be found on :
 
-localhost:8000/tutorial/all
+localhost:8000/tutorial
 
-- The list of all ListTutorials entities can be found on :
+- The list of all TutorialLibrary entities can be found on :
 
-localhost:8000/list/tutorials
+localhost:8000/tutorial/library
+
+- The list of all TutorialSet entities can be found on :
+
+localhost:8000/tutorial/set

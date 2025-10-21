@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tutorial{% endblock %}
+
+{% block main %}
+    <h1>Add a Tutorial to the set "{{ tutorialSet }}"</h1>
+
+    {{ include('tutorial/_form.html.twig') }}
+
+    <a href="{{ path('app_tutorial_show', {'id' : tutorialSet.id}) }}">Cancel</a>
+{% endblock %}

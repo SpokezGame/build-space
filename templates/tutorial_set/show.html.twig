@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TutorialSet{% endblock %}
+
+{% block main %}
+    <h1>TutorialSet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tutorial_set.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ tutorial_set.name }}</td>
+            </tr>
+            <tr>
+            	<th>Tutorials</th>
+            	{% for tutorial in tutorial_set.tutorials %}
+            		<td>{{ tutorial }}</td>
+            	{% endfor %}
+            	<td><a href="{{ path("app_tutorial_newintutorialset", {'id' : tutorial_set.id}) }}">Add tutorial</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tutorial_set_index') }}">back to list</a>
+
+    <a href="{{ path('app_tutorial_set_edit', {'id': tutorial_set.id}) }}">edit</a>
+
+    {{ include('tutorial_set/_delete_form.html.twig') }}
+{% endblock %}

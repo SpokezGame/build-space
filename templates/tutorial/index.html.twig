@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-	{# Show all list of tutorials #}
-	<h3>All tutorials</h3>
+	{# Show all tutorials #}
+	<h1>All tutorials</h1>
 	
 	<ul>
         {% for tutorial in tutorials %}
         
-        	<li> <a href={{ path('tutorial_show', {'id': tutorial.id}) }}> {{ tutorial.name }} </a> </li>
+        	<li> <a href="{{ path('app_tutorial_show', {'id': tutorial.id}) }}"> {{ tutorial.name }} </a>&nbsp &nbsp &nbsp &nbsp<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">edit</a> </li>
        
         {% endfor %}
     </ul>
+	
+	<a href="{{ path('app_tutorial_new') }}">Create new</a>
 	
 {% endblock %} {# body #} 

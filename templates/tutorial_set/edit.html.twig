@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TutorialSet{% endblock %}
+
+{% block main %}
+    <h1>Edit TutorialSet</h1>
+
+    {{ include('tutorial_set/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_tutorial_set_index') }}">Cancel</a>
+
+    {{ include('tutorial_set/_delete_form.html.twig') }}
+{% endblock %}
