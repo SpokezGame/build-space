@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TutorialLibraryRepository;
+use App\Repository\LibraryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TutorialLibraryRepository::class)]
-class TutorialLibrary
+#[ORM\Entity(repositoryClass: LibraryRepository::class)]
+class Library
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +21,7 @@ class TutorialLibrary
     /**
      * @var Collection<int, Tutorial>
      */
-    #[ORM\OneToMany(targetEntity: Tutorial::class, mappedBy: 'tutorialLibrary', orphanRemoval: true, cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Tutorial::class, mappedBy: 'library', orphanRemoval: true, cascade: ['persist'])]
     private Collection $tutorials;
 
     public function __construct()
@@ -58,7 +58,7 @@ class TutorialLibrary
     {
         if (!$this->tutorials->contains($tutorial)) {
             $this->tutorials->add($tutorial);
-            $tutorial->setTutorialLibrary($this);
+            $tutorial->setLibrary($this);
         }
 
         return $this;
@@ -68,8 +68,8 @@ class TutorialLibrary
     {
         if ($this->tutorials->removeElement($tutorial)) {
             // set the owning side to null (unless already changed)
-            if ($tutorial->getTutorialLibrary() === $this) {
-                $tutorial->setTutorialLibrary(null);
+            if ($tutorial->getLibrary() === $this) {
+                $tutorial->setLibrary(null);
             }
         }
 

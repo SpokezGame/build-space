@@ -3,9 +3,9 @@
 {% block title %}New Tutorial{% endblock %}
 
 {% block main %}
-    <h1>Add a Tutorial to the set "{{ tutorialSet }}"</h1>
+    <h1>Add a Tutorial to the theme "{{ theme }}"</h1>
 
     {{ include('tutorial/_form.html.twig') }}
 
-    <a href="{{ path('app_tutorial_show', {'id' : tutorialSet.id}) }}">Cancel</a>
+    <a href="{{ path('app_tutorial_show', {'id' : theme.id}) }}">Cancel</a>
 {% endblock %}

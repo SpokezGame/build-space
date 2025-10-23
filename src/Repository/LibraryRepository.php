@@ -2,17 +2,17 @@
 
 namespace App\Repository;
 
-use App\Entity\TutorialLibrary;
+use App\Entity\Library;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<TutorialLibrary>
  */
-class TutorialLibraryRepository extends ServiceEntityRepository
+class LibraryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TutorialLibrary::class);
+        parent::__construct($registry, Library::class);
     }
 }

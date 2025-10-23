@@ -14,7 +14,7 @@ class TutorialType extends AbstractType
         $builder
             ->add('name')
             ->add('author')
-            ->add('tutorialLibrary')
+            ->add('library')
         ;
     }
 

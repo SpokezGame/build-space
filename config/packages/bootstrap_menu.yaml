@@ -6,8 +6,8 @@ bootstrap_menu:
           label: 'Tutorials'
           route: 'app_tutorial_index'
         tutorial_libraries:
-          label: 'TutorialLibraries'
-          route: 'app_tutorial_library_index'
+          label: 'Libraries'
+          route: 'app_library_index'
         tutorial_sets:
-          label: 'TutorialSets'
-          route: 'app_tutorial_set_index'
+          label: 'Themes'
+          route: 'app_theme_index'

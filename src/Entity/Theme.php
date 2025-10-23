@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TutorialSetRepository;
+use App\Repository\ThemeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TutorialSetRepository::class)]
-class TutorialSet
+#[ORM\Entity(repositoryClass: ThemeRepository::class)]
+class Theme
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +21,7 @@ class TutorialSet
     /**
      * @var Collection<int, Tutorial>
      */
-    #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'tutorialSets')]
+    #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'themes')]
     private Collection $tutorials;
 
     public function __construct()

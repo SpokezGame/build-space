@@ -23,17 +23,17 @@ class Tutorial
 
     #[ORM\ManyToOne(inversedBy: 'tutorials')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?TutorialLibrary $tutorialLibrary = null;
+    private ?Library $library = null;
 
     /**
-     * @var Collection<int, TutorialSet>
+     * @var Collection<int, Theme>
      */
-    #[ORM\ManyToMany(targetEntity: TutorialSet::class, mappedBy: 'tutorials')]
-    private Collection $tutorialSets;
+    #[ORM\ManyToMany(targetEntity: Theme::class, mappedBy: 'tutorials', cascade: ['persist'])]
+    private Collection $themes;
 
     public function __construct()
     {
-        $this->tutorialSets = new ArrayCollection();
+        $this->themes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,14 +65,14 @@ class Tutorial
         return $this;
     }
 
-    public function getTutorialLibrary(): ?TutorialLibrary
+    public function getLibrary(): ?Library
     {
-        return $this->tutorialLibrary;
+        return $this->library;
     }
 
-    public function setTutorialLibrary(?TutorialLibrary $tutorialLibrary): static
+    public function setLibrary(?Library $library): static
     {
-        $this->tutorialLibrary = $tutorialLibrary;
+        $this->library = $library;
 
         return $this;
     }
@@ -80,25 +80,25 @@ class Tutorial
     /**
      * @return Collection<int, TutorialSet>
      */
-    public function getTutorialSets(): Collection
+    public function getTheme(): Collection
     {
-        return $this->tutorialSets;
+        return $this->themes;
     }
 
-    public function addTutorialSet(TutorialSet $tutorialSet): static
+    public function addTheme(Theme $theme): static
     {
-        if (!$this->tutorialSets->contains($tutorialSet)) {
-            $this->tutorialSets->add($tutorialSet);
-            $tutorialSet->addTutorial($this);
+        if (!$this->themes->contains($theme)) {
+            $this->themes->add($theme);
+            $theme->addTutorial($this);
         }
 
         return $this;
     }
 
-    public function removeTutorialSet(TutorialSet $tutorialSet): static
+    public function removeTutorialSet(Theme $theme): static
     {
-        if ($this->tutorialSets->removeElement($tutorialSet)) {
-            $tutorialSet->removeTutorial($this);
+        if ($this->themes->removeElement($theme)) {
+            $theme->removeTutorial($this);
         }
 
         return $this;

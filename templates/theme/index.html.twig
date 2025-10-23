@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TutorialSet index{% endblock %}
+{% block title %}Theme index{% endblock %}
 
 {% block main %}
-    <h1>TutorialSet index</h1>
+    <h1>Theme index</h1>
 
     <table class="table">
         <thead>
@@ -14,13 +14,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for tutorial_set in tutorial_sets %}
+        {% for theme in themes %}
             <tr>
-                <td>{{ tutorial_set.id }}</td>
-                <td>{{ tutorial_set.name }}</td>
+                <td>{{ theme.id }}</td>
+                <td>{{ theme.name }}</td>
                 <td>
-                    <a href="{{ path('app_tutorial_set_show', {'id': tutorial_set.id}) }}">show</a>
-                    <a href="{{ path('app_tutorial_set_edit', {'id': tutorial_set.id}) }}">edit</a>
+                    <a href="{{ path('app_theme_show', {'id': theme.id}) }}">show</a>
+                    <a href="{{ path('app_theme_edit', {'id': theme.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tutorial_set_new') }}">Create new</a>
+    <a href="{{ path('app_theme_new') }}">Create new</a>
 {% endblock %}
