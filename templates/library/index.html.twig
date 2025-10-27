@@ -17,7 +17,7 @@
         {% for library in libraries %}
             <tr>
                 <td>{{ library.id }}</td>
-                <td>{{ library.author }}</td>
+                <td>{{ library.member }}</td>
                 <td>
                     <a href="{{ path('app_library_show', {'id': library.id}) }}">show</a>
                     <a href="{{ path('app_library_edit', {'id': library.id}) }}">edit</a>

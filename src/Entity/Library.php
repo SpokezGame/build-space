@@ -15,14 +15,14 @@ class Library
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     /**
      * @var Collection<int, Tutorial>
      */
     #[ORM\OneToMany(targetEntity: Tutorial::class, mappedBy: 'library', orphanRemoval: true, cascade: ['persist'])]
     private Collection $tutorials;
+
+    #[ORM\OneToOne(mappedBy: 'library', cascade: ['persist', 'remove'])]
+    private ?Member $member = null;
 
     public function __construct()
     {
@@ -32,18 +32,6 @@ class Library
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): static
-    {
-        $this->author = $author;
-
-        return $this;
     }
 
     /**
@@ -78,6 +66,23 @@ class Library
     
     public function __toString(): string
     {
-        return $this->author;
+        return $this->member;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(Member $member): static
+    {
+        // set the owning side of the relation if necessary
+        if ($member->getLibrary() !== $this) {
+            $member->setLibrary($this);
+        }
+
+        $this->member = $member;
+
+        return $this;
     }
 }

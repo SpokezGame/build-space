@@ -5,20 +5,30 @@ namespace App\DataFixtures;
 use App\Entity\Library;
 use App\Entity\Theme;
 use App\Entity\Tutorial;
+use App\Entity\Member;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+
     /**
-     * Generates initialization data for libraries : [author]
+     * Generates initialization data for members :
+     *  [email, plain text password]
      * @return \\Generator
      */
-    private static function libraryGenerator()
+    private function membersGenerator()
     {
-        yield ["user1"];
-        yield ["user2"];
-        yield ["user3"];
+        yield ['admin@localhost','123456', 'admin'];
+        yield ['spokez@localhost','123456', 'spokez'];
+        yield ['lyanou@localhost','123456', 'lyanou'];
     }
     
     /**
@@ -27,13 +37,13 @@ class AppFixtures extends Fixture
      */
     private static function tutorialGenerator()
     {
-        yield ["Fantasy House", "user1"];
-        yield ["Well", "user1"];
-        yield ["Cupboard", "user1"];
-        yield ["Field", "user2"];
-        yield ["Clock", "user2"];
-        yield ["Pool table", "user3"];
-        yield ["Chair", "user3"];
+        yield ["Fantasy House", "spokez"];
+        yield ["Well", "spokez"];
+        yield ["Cupboard", "lyanou"];
+        yield ["Field", "spokez"];
+        yield ["Clock", "lyanou"];
+        yield ["Pool table", "lyanou"];
+        yield ["Chair", "lyanou"];
     }
     
     /**
@@ -42,31 +52,40 @@ class AppFixtures extends Fixture
      */
     private static function themeGenerator()
     {
-        yield ["Fantasy", ["Fantasy House", "Well", "Chair"]];
-        yield ["House", ["Cupboard", "Clock", "Chair"]];
+        yield ["Fantasy", ["Fantasy House", "Well", "Field"], "spokez"];
+        yield ["House", ["Cupboard", "Clock", "Chair"], "lyanou"];
     }
     
     public function load(ObjectManager $manager) : void
     {
-        
-        // Loading of test Libraries
-        foreach (self::libraryGenerator() as [$author] ) {
+        //  Loading of members
+        foreach ($this->membersGenerator() as [$email, $plainPassword, $name]) {
+            $user = new Member();
+            $password = $this->hasher->hashPassword($user, $plainPassword);
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $user->setName($name);
+
             $library = new Library();
-            $library->setAuthor($author);
-            $manager->persist($library);
+            $library->setMember($user);
+
+            // $roles = array();
+            // $roles[] = $role;
+            // $user->setRoles($roles);
+
+            $manager->persist($user);
         }
         $manager->flush();
         
         
         // Loading of test Tutorials
-        $libraryRepo = $manager->getRepository(Library::class);
-        
-        foreach (self::tutorialGenerator() as [$name, $author])
+        $userRepo = $manager->getRepository(Member::class);
+
+        foreach (self::tutorialGenerator() as [$name, $member])
         {
-            $library = $libraryRepo->findOneBy(['author' => $author]);
+            $library = $userRepo->findOneBy(['name' => $member])->getLibrary();
             
             $tutorial = new Tutorial();
-            $tutorial->setAuthor($author);
             $tutorial->setName($name);
             
             $library->addTutorial($tutorial);
@@ -78,14 +97,20 @@ class AppFixtures extends Fixture
         // Loading of Themes
         $tutorialRepo = $manager->getRepository(Tutorial::class);
         
-        foreach (self::themeGenerator() as [$name, $tutorials])
+        foreach (self::themeGenerator() as [$name, $tutorials, $member])
         {
             $theme = new Theme();
             $theme->setName($name);
+
+            $user = $userRepo->findOneBy(['name' =>  $member]);
             
+            $user->addTheme($theme);
+
             foreach ($tutorials as $tutorial_name)
             {
                 $tutorial = $tutorialRepo->findOneBy(['name' => $tutorial_name]);
+
+
                 
                 $tutorial->addTheme($theme);
                 

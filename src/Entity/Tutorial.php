@@ -18,9 +18,6 @@ class Tutorial
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     #[ORM\ManyToOne(inversedBy: 'tutorials')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Library $library = null;
@@ -49,18 +46,6 @@ class Tutorial
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): static
-    {
-        $this->author = $author;
 
         return $this;
     }

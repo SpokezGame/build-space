@@ -13,7 +13,6 @@ class TutorialType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('author')
             ->add('library')
         ;
     }

@@ -24,6 +24,10 @@ class Theme
     #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'themes')]
     private Collection $tutorials;
 
+    #[ORM\ManyToOne(inversedBy: 'themes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $member = null;
+
     public function __construct()
     {
         $this->tutorials = new ArrayCollection();
@@ -73,5 +77,17 @@ class Theme
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): static
+    {
+        $this->member = $member;
+
+        return $this;
     }
 }

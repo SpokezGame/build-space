@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 #[Route('/theme')]
 final class ThemeController extends AbstractController
@@ -67,6 +68,31 @@ final class ThemeController extends AbstractController
             'theme' => $theme,
             'todo' => $todo,
             'form' => $form,
+        ]);
+    }
+
+    /*
+     * Show a Tutorial entity in a theme
+     */
+    #[Route('/{theme_id}/tutorial/{tutorial_id}', name: 'app_theme_tutorial_show', requirements: ['idtheme' => '\d+', 'idtuto' => '\d+'], methods: ['GET'])]
+    public function tutorialShow(
+            #[MapEntity(id: 'theme_id')]
+        Theme $theme,
+        #[MapEntity(id: 'tutorial_id')]
+        Tutorial $tutorial
+    ): Response
+    {   
+        if(! $theme->getTutorials()->contains($tutorial)) {
+          throw $this->createNotFoundException("Couldn't find such a tutorial in this theme!");
+        }
+
+        // if(! $[galerie]->isPublished()) {
+        //   throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+        //}
+        
+        return $this->render('theme/tutorialshow.html.twig', [
+            'tutorial' => $tutorial,
+            'theme' => $theme
         ]);
     }
 
