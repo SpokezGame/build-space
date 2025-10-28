@@ -3,9 +3,9 @@
 {% block title %}New Tutorial{% endblock %}
 
 {% block main %}
-    <h1>Create new Tutorial</h1>
+    <h1>New Tutorial</h1>
 
     {{ include('tutorial/_form.html.twig') }}
 
-    <a href="{{ path('app_tutorial_index') }}">Cancel</a>
+    <a href="{{ path('app_library_show', {'id': library.id}) }}">Cancel</a>
 {% endblock %}

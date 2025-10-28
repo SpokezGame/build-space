@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ member }}'s page{% endblock %}
+
+{% block main %}
+    <h1>{{ member }}'s page</h1>
+	
+	<h3>Themes</h3>
+    {% for theme in member.themes %}
+    	{% if theme.published %}
+    		<a href="{{ path("app_theme_show", {'id': theme.id}) }}">{{ theme }}</a>
+    		<br>
+    	{% endif %}
+    {% endfor %}
+    
+    <a href="{{ path("app_theme_new", {'id': member.id}) }}">Add a new theme</a>
+    
+	<h3>Library</h3>
+	<a href="{{ path("app_library_show", {'id': member.library.id}) }}" >{{ member }}'s library</a>
+	<br>
+	<a href="{{ path('app_member_index') }}">Back</a>
+    
+{% endblock %}

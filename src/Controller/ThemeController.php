@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tutorial;
 use App\Entity\Theme;
+use App\Entity\Member;
 use App\Form\ThemeType;
 use App\Form\TutorialType;
 use App\Repository\ThemeRepository;
@@ -21,14 +22,15 @@ final class ThemeController extends AbstractController
     public function index(ThemeRepository $themeRepository): Response
     {
         return $this->render('theme/index.html.twig', [
-            'themes' => $themeRepository->findAll(),
+            'themes' => $themeRepository->findBy(['published' => true]),
         ]);
     }
 
-    #[Route('/new', name: 'app_theme_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_theme_new', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, Member $member): Response
     {
         $theme = new Theme();
+        $theme->setMember($member);
         $form = $this->createForm(ThemeType::class, $theme);
         $form->handleRequest($request);
 
@@ -36,16 +38,17 @@ final class ThemeController extends AbstractController
             $entityManager->persist($theme);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_theme_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_member_show', ['id' => $member->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('theme/new.html.twig', [
             'theme' => $theme,
+            'member' => $member,
             'form' => $form,
         ]);
     }
     
-    #[Route('/newintheme/{id}', name: 'app_tutorial_newintheme', methods: ['GET', 'POST'])]
+    #[Route('/newintheme/{id}', name: 'app_tutorial_newintheme', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function newInTheme(Request $request, EntityManagerInterface $entityManager, Theme $theme): Response
     {
         $todo = new Tutorial();
@@ -113,7 +116,7 @@ final class ThemeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_theme_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_member_show', ['id' => $theme->getMember()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('theme/edit.html.twig', [
@@ -130,6 +133,6 @@ final class ThemeController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_theme_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_member_show', ['id' => $theme->getMember()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

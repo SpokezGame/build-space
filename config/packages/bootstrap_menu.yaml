@@ -5,9 +5,9 @@ bootstrap_menu:
         tutorials:
           label: 'Tutorials'
           route: 'app_tutorial_index'
-        tutorial_libraries:
-          label: 'Libraries'
-          route: 'app_library_index'
-        tutorial_sets:
+        libraries:
+          label: 'Members'
+          route: 'app_member_index'
+        themes:
           label: 'Themes'
           route: 'app_theme_index'

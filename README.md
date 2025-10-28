@@ -57,3 +57,7 @@ localhost:8000/library
 - The list of all Theme entities can be found on :
 
 localhost:8000/theme
+
+- The list of all Member entities can be found on :
+
+localhost:8000/member

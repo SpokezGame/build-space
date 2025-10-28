@@ -28,6 +28,9 @@ class Tutorial
     #[ORM\ManyToMany(targetEntity: Theme::class, mappedBy: 'tutorials', cascade: ['persist'])]
     private Collection $themes;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
@@ -92,5 +95,17 @@ class Tutorial
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

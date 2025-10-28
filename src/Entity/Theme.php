@@ -28,6 +28,9 @@ class Theme
     #[ORM\JoinColumn(nullable: false)]
     private ?Member $member = null;
 
+    #[ORM\Column]
+    private ?bool $published = False;
+
     public function __construct()
     {
         $this->tutorials = new ArrayCollection();
@@ -87,6 +90,18 @@ class Theme
     public function setMember(?Member $member): static
     {
         $this->member = $member;
+
+        return $this;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): static
+    {
+        $this->published = $published;
 
         return $this;
     }

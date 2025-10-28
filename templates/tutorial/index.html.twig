@@ -7,11 +7,9 @@
 	<ul>
         {% for tutorial in tutorials %}
         
-        	<li> <a href="{{ path('app_tutorial_show', {'id': tutorial.id}) }}"> {{ tutorial.name }} </a>&nbsp &nbsp &nbsp &nbsp<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">edit</a> </li>
+        	<li> <a href="{{ path('app_tutorial_show', {'id': tutorial.id}) }}"> {{ tutorial.name }} </a>&nbsp &nbsp &nbsp &nbsp<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a> </li>
        
         {% endfor %}
     </ul>
-	
-	<a href="{{ path('app_tutorial_new') }}">Create new</a>
 	
 {% endblock %} {# body #} 

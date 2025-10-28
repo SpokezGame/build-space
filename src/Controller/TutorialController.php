@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Tutorial;
+use App\Entity\Library;
 use App\Form\TutorialType;
 use App\Repository\TutorialRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,11 @@ final class TutorialController extends AbstractController
     /*
      * Create a Tutorial entity
      */
-    #[Route('/new', name: 'app_tutorial_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_tutorial_new', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, Library $library): Response
     {
         $tutorial = new Tutorial();
+        $tutorial->setLibrary($library);
         $form = $this->createForm(TutorialType::class, $tutorial);
         $form->handleRequest($request);
         
@@ -42,11 +44,12 @@ final class TutorialController extends AbstractController
             $entityManager->persist($tutorial);
             $entityManager->flush();
             
-            return $this->redirectToRoute('app_tutorial_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_library_show', ['id' => $library->getId()], Response::HTTP_SEE_OTHER);
         }
         
         return $this->render('tutorial/new.html.twig', [
             'tutorial' => $tutorial,
+            'library' => $library,
             'form' => $form,
         ]);
     }
@@ -74,7 +77,7 @@ final class TutorialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
             
-            return $this->redirectToRoute('app_tutorial_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);
         }
         
         return $this->render('tutorial/edit.html.twig', [
@@ -94,6 +97,6 @@ final class TutorialController extends AbstractController
             $entityManager->flush();
         }
         
-        return $this->redirectToRoute('app_tutorial_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

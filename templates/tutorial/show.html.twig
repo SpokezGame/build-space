@@ -8,9 +8,11 @@
         
         <li><b> Id : {{ tutorial.id }} </b></li>
         <li> Name : {{ tutorial.name }} </li>
+        <li> Description : {{ tutorial.description }} </li>
 
     </ul>
 	
-    <a href="{{ path('index') }}">Back</a>
+	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
+    <a href="{{ path('app_library_show', {'id': tutorial.library.id}) }}">Back</a>
 	
 {% endblock %} {# body #} 

@@ -7,5 +7,5 @@
 
     {{ include('theme/_form.html.twig') }}
 
-    <a href="{{ path('app_theme_index') }}">Cancel</a>
+    <a href="{{ path('app_member_show', {'id': member.id}) }}">Cancel</a>
 {% endblock %}

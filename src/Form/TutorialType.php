@@ -13,7 +13,8 @@ class TutorialType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('library')
+            ->add('description')
+            ->add('library', null, ['disabled' => true])
         ;
     }
 

@@ -37,13 +37,13 @@ class AppFixtures extends Fixture
      */
     private static function tutorialGenerator()
     {
-        yield ["Fantasy House", "spokez"];
-        yield ["Well", "spokez"];
-        yield ["Cupboard", "lyanou"];
-        yield ["Field", "spokez"];
-        yield ["Clock", "lyanou"];
-        yield ["Pool table", "lyanou"];
-        yield ["Chair", "lyanou"];
+        yield ["Fantasy House", "spokez", "A cozy magical dwelling with enchanting details and mystical charm. It's perfect for adventurers seeking comfort and wonder."];
+        yield ["Well", "spokez", "A rustic stone well that brings life and realism to any village or medieval courtyard."];
+        yield ["Cupboard", "lyanou", "A charming wooden cupboard with fine detailing, a small but elegant touch of homely design."];
+        yield ["Field", "spokez", "A peaceful stretch of green farmland, ideal for crops, animals, or a tranquil countryside vibe."];
+        yield ["Clock", "lyanou", "An ornate clock structure showcasing craftsmanship and precision, time stands still in its beauty."];
+        yield ["Pool table", "lyanou", "A detailed recreation of a billiards table, perfect for adding fun and sophistication to any interior."];
+        yield ["Chair", "lyanou", "A stylish, sturdy chair design, simple yet elegant, completing any room or outdoor space."];
     }
     
     /**
@@ -52,8 +52,8 @@ class AppFixtures extends Fixture
      */
     private static function themeGenerator()
     {
-        yield ["Fantasy", ["Fantasy House", "Well", "Field"], "spokez"];
-        yield ["House", ["Cupboard", "Clock", "Chair"], "lyanou"];
+        yield ["Fantasy", ["Fantasy House", "Well", "Field"], "spokez", True];
+        yield ["House", ["Cupboard", "Clock", "Chair"], "lyanou", True];
     }
     
     public function load(ObjectManager $manager) : void
@@ -78,15 +78,16 @@ class AppFixtures extends Fixture
         $manager->flush();
         
         
-        // Loading of test Tutorials
+        // Loading of Tutorials
         $userRepo = $manager->getRepository(Member::class);
 
-        foreach (self::tutorialGenerator() as [$name, $member])
+        foreach (self::tutorialGenerator() as [$name, $member, $description])
         {
             $library = $userRepo->findOneBy(['name' => $member])->getLibrary();
             
             $tutorial = new Tutorial();
             $tutorial->setName($name);
+            $tutorial->setDescription($description);
             
             $library->addTutorial($tutorial);
             // there's a cascade persist on library
@@ -97,10 +98,11 @@ class AppFixtures extends Fixture
         // Loading of Themes
         $tutorialRepo = $manager->getRepository(Tutorial::class);
         
-        foreach (self::themeGenerator() as [$name, $tutorials, $member])
+        foreach (self::themeGenerator() as [$name, $tutorials, $member, $published])
         {
             $theme = new Theme();
             $theme->setName($name);
+            $theme->setPublished($published);
 
             $user = $userRepo->findOneBy(['name' =>  $member]);
             
