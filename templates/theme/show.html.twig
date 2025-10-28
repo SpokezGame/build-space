@@ -20,7 +20,7 @@
             	{% for tutorial in theme.tutorials %}
             		<td><a href="{{ path("app_theme_tutorial_show", {'theme_id': theme.id, 'tutorial_id': tutorial.id}) }}">{{ tutorial }}</a></td>
             	{% endfor %}
-            	<td><a href="{{ path("app_tutorial_newintheme", {'id' : theme.id}) }}">Add tutorial</a></td>
+            	<td><a href="{{ path("app_tutorial_newintheme", {'id' : theme.id}) }}">Create a new tutorial</a></td>
             </tr>
         </tbody>
     </table>
