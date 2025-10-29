@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Image;
 use App\Entity\Tutorial;
 use App\Entity\Library;
 use App\Form\TutorialType;
@@ -10,6 +11,7 @@ use App\Repository\TutorialRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/tutorial')]
@@ -37,10 +39,22 @@ final class TutorialController extends AbstractController
     {
         $tutorial = new Tutorial();
         $tutorial->setLibrary($library);
+        
         $form = $this->createForm(TutorialType::class, $tutorial);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            // Upload of several images
+            $uploadedFiles = $form->get('steps')->getData();
+            
+            foreach ($uploadedFiles as $file) {
+                $image = new Image();
+                $image->setImageFile($file);
+                $tutorial->addStep($image);
+                $entityManager->persist($image);
+            }
+            
+            // Save in database
             $entityManager->persist($tutorial);
             $entityManager->flush();
             
@@ -75,6 +89,16 @@ final class TutorialController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            // Upload of several images
+            $uploadedFiles = $form->get('steps')->getData();
+            
+            foreach ($uploadedFiles as $file) {
+                $image = new Image();
+                $image->setImageFile($file);
+                $tutorial->addStep($image);
+                $entityManager->persist($image);
+            }
+            
             $entityManager->flush();
             
             return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);
@@ -98,5 +122,16 @@ final class TutorialController extends AbstractController
         }
         
         return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);
+    }
+    
+    #[Route('/tutorial/{id}/image/remove', requirements: ['id' => '\d+'], name: 'app_tutorial_remove_image')]
+    public function removeImage(Image $image, EntityManagerInterface $entityManager)
+    {
+        $tutorial = $image->getTutorialSteps();
+        $tutorial->removeStep($image);
+        $entityManager->remove($image);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_tutorial_edit', ['id' => $tutorial->getId()]);
     }
 }

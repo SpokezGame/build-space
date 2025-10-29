@@ -1,18 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-	{# Show the detail of a tutorial #}
-	<h3>Tutorial : {{ tutorial.name }} - {{ tutorial.library.member }}</h3>
+	{% block tutorialshow_header %}
+	{% endblock %}
 	
-	<ul>
-        
-        <li><b> Id : {{ tutorial.id }} </b></li>
-        <li> Name : {{ tutorial.name }} </li>
-        <li> Description : {{ tutorial.description }} </li>
-
-    </ul>
+	{% block tutorialshow_main %}
+		<div style="text-align: center;">
+			<div>
+            	<img 
+                src="{{ vich_uploader_asset(tutorial.imageBuild, 'imageFile') }}" 
+                alt="{{ tutorial.name }}" 
+                class="img-fluid rounded"
+                style="height: 465px;"
+            	/>
+            </div>
+            <div style="padding-top: 1%;">
+            	<h3>{{ tutorial.name }}</h3>
+            </div>
+    	</div>
+    	
+    	<ul>
+            <li> Name : {{ tutorial.name }} </li>
+            <li> Author : {{ tutorial.library.member }} </li>
+            <li> Description : {{ tutorial.description }}</li>
+    		<li> Steps : 
+    		{% for step in tutorial.steps %}
+    			<div class="step-image" style="text-align: center;">
+        			<img 
+                        src="{{ vich_uploader_asset(step, 'imageFile') }}" 
+                        alt="{{ step.id }}" 
+                        class="img-fluid rounded"
+                        style="max-width: 60%;"
+                    />
+                </div>
+    		{% endfor %}
+    		</li>
+        </ul>
+    
+    {% endblock %}
 	
-	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
-    <a href="{{ path('app_library_show', {'id': tutorial.library.id}) }}">Back</a>
+	{% block tutorialshow_footer %}
+	
+    	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
+        <a href="{{ path('app_tutorial_index') }}">Back</a>
+    
+    {% endblock %}
 	
 {% endblock %} {# body #} 

@@ -1,4 +1,22 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    
+    <br>
+    
+    {% for step in tutorial.steps %}
+        <div class="step-image">
+      		<img 
+                src="{{ vich_uploader_asset(step, 'imageFile') }}" 
+                alt="{{ step.id }}" 
+                class="img-fluid rounded"
+            	style="max-width: 80%;"/>
+            <a href="{{ path('app_tutorial_remove_image', {'id': step.id}) }}" class="btn btn-danger">Delete step</a>
+        </div>
+    {% endfor %}
+    
+    {% if button_label|default(null) %}
+    	<br>
+    {% endif %}
+    
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

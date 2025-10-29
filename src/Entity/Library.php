@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class that contains all the tutorials of one member
+ */
 #[ORM\Entity(repositoryClass: LibraryRepository::class)]
 class Library
 {

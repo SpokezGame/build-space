@@ -5,7 +5,11 @@
 {% block main %}
     <h1>Create new Theme</h1>
 
+	<br>
+
     {{ include('theme/_form.html.twig') }}
+    
+    <br>
 
     <a href="{{ path('app_member_show', {'id': member.id}) }}">Cancel</a>
 {% endblock %}

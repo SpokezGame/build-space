@@ -4,6 +4,10 @@
 
 {% block main %}
     <h1>Create a new Tutorial in the theme "{{ theme }}"</h1>
+    
+    <h5>WARNING : The title of the steps must in a lexicographic order.</h5>
+    
+    <br>
 
     {{ include('tutorial/_form.html.twig') }}
 

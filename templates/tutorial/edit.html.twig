@@ -4,10 +4,18 @@
 
 {% block main %}
     <h1>Edit Tutorial</h1>
+    
+    <h5>You can delete or add steps. Be aware that you can't change the order of the steps. The added steps will appear in the end.</h5>
+    
+    <br>
 
-    {{ include('tutorial/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('tutorial/_form.html.twig', {'button_label': 'Update', 'tutorial': tutorial}) }}
+
+	<br>
 
     <a href="{{ path('app_library_show', {'id': tutorial.library.id}) }}">Cancel</a>
 
+	<br><br>
+	
     {{ include('tutorial/_delete_form.html.twig') }}
 {% endblock %}

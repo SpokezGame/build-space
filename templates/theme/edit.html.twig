@@ -4,10 +4,16 @@
 
 {% block main %}
     <h1>Edit Theme</h1>
+    
+    <br>
 
     {{ include('theme/_form.html.twig', {'button_label': 'Update'}) }}
+	
+	<br>
 
     <a href="{{ path('app_member_show', {'id': theme.member.id}) }}">Cancel</a>
+    
+    <br><br>
 
     {{ include('theme/_delete_form.html.twig') }}
 {% endblock %}

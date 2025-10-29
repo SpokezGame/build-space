@@ -77,7 +77,7 @@ final class ThemeController extends AbstractController
     /*
      * Show a Tutorial entity in a theme
      */
-    #[Route('/{theme_id}/tutorial/{tutorial_id}', name: 'app_theme_tutorial_show', requirements: ['idtheme' => '\d+', 'idtuto' => '\d+'], methods: ['GET'])]
+    #[Route('/{theme_id}/tutorial/{tutorial_id}', name: 'app_theme_tutorial_show', requirements: ['theme_id' => '\d+', 'tutorial_id' => '\d+'], methods: ['GET'])]
     public function tutorialShow(
             #[MapEntity(id: 'theme_id')]
         Theme $theme,
@@ -89,7 +89,7 @@ final class ThemeController extends AbstractController
           throw $this->createNotFoundException("Couldn't find such a tutorial in this theme!");
         }
 
-        // if(! $[galerie]->isPublished()) {
+        // if(! $theme->isPublished()) {
         //   throw $this->createAccessDeniedException("You cannot access the requested ressource!");
         //}
         

@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class that represents a build, its features, and the steps to build it
+ */
 #[ORM\Entity(repositoryClass: TutorialRepository::class)]
 class Tutorial
 {
@@ -31,9 +34,24 @@ class Tutorial
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    // The image that will be showed to present the build
+    #[ORM\OneToOne(inversedBy: 'tutorial', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Image $imageBuild = null;
+
+    
+    // The images of each step, in lexicographic order
+    /**
+     * @var Collection<int, Image>
+     */
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'tutorialSteps')]
+    #[ORM\OrderBy(['imageName' => 'ASC'])]
+    private Collection $steps;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
+        $this->steps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +123,48 @@ class Tutorial
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImageBuild(): ?Image
+    {
+        return $this->imageBuild;
+    }
+
+    public function setImageBuild(Image $imageBuild): static
+    {
+        $this->imageBuild = $imageBuild;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(Image $step): static
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps->add($step);
+            $step->setTutorialSteps($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(Image $step): static
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getTutorialSteps() === $this) {
+                $step->setTutorialSteps(null);
+            }
+        }
 
         return $this;
     }

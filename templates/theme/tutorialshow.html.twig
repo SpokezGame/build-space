@@ -1,16 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'tutorial/show.html.twig' %}
 
-{% block main %}
+{% block tutorialshow_header %}
 	{# Show the detail of a tutorial #}
-	<h3>Tutorial : {{ tutorial.name }} - {{ tutorial.library.member }}</h3>
+	<h3>Theme : {{ theme }}</h3>
+{% endblock %}
 	
-	<ul>
-        
-        <li><b> Id : {{ tutorial.id }} </b></li>
-        <li> Name : {{ tutorial.name }} </li>
-
-    </ul>
-	
+{% block tutorialshow_footer %}
+	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
     <a href="{{ path('app_theme_show', {'id': theme.id}) }}">Back to {{ theme }} theme</a>
-	
 {% endblock %} {# body #} 

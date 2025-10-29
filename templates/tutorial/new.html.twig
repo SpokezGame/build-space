@@ -4,8 +4,14 @@
 
 {% block main %}
     <h1>New Tutorial</h1>
-
+	
+	<h5>WARNING : The title of the steps must in a lexicographic order.</h5>
+	
+	<br>
+	
     {{ include('tutorial/_form.html.twig') }}
+    
+    <br>
 
     <a href="{{ path('app_library_show', {'id': library.id}) }}">Cancel</a>
 {% endblock %}

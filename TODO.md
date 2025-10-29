@@ -1,4 +1,4 @@
-# I'm at step 17 of the realisation guide
+# I'm at step 18 of the realisation guide
 
 # List of TODOs
 
@@ -23,5 +23,7 @@
 - Give access to all tutorials of a member to himself
 
 - Restrict access to everyone (except admin) from unpublished tutorials
+
+- Delete all images that are not from the fixtures in public/images/screens
 
 - ~~Make a page where we can select if we wants to see all tutorials or see all the list of tutorials (so the name of author)~~

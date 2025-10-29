@@ -26,6 +26,10 @@
 	font-weight: bold;
 }
 
+.step-image {
+	padding-top: 5%;
+}
+
 /* Template */
  
 :root {

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Library;
+use App\Entity\Tutorial;
 use App\Form\LibraryType;
 use App\Repository\LibraryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 #[Route('/library')]
 final class LibraryController extends AbstractController
@@ -57,6 +59,31 @@ final class LibraryController extends AbstractController
         return $this->render('library/show.html.twig', [
             'library' => $library,
         ]);
+    }
+    
+    /*
+     * Show a Tutorial entity in a library
+     */
+    #[Route('/{library_id}/tutorial/{tutorial_id}', name: 'app_library_tutorial_show', requirements: ['library_id' => '\d+', 'tutorial_id' => '\d+'], methods: ['GET'])]
+    public function tutorialShow(
+        #[MapEntity(id: 'library_id')]
+        Library $library,
+        #[MapEntity(id: 'tutorial_id')]
+        Tutorial $tutorial
+        ): Response
+        {
+            if(! $library->getTutorials()->contains($tutorial)) {
+                throw $this->createNotFoundException("Couldn't find such a tutorial in this library!");
+            }
+            
+            // if(! $library->isPublished()) {
+            //   throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+            //}
+            
+            return $this->render('library/tutorialshow.html.twig', [
+                'tutorial' => $tutorial,
+                'library' => $library
+            ]);
     }
     
     /*

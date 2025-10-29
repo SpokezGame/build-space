@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class that contains several tutorials, grouped by a specific theme
+ */
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
 class Theme
 {

@@ -18,11 +18,10 @@
             <tr>
             	<th>Tutorials</th>
             	{% for tutorial in library.tutorials %}
-            		<td><a href="{{ path("app_tutorial_show", {'id': tutorial.id}) }}">{{ tutorial }}</a></td>
+            		<td><a href="{{ path("app_library_tutorial_show", {'library_id': library.id, 'tutorial_id': tutorial.id}) }}">{{ tutorial }}</a></td>
             	{% endfor %}
             	<td><a href="{{ path("app_tutorial_new", {'id': library.id}) }}">Create a new tutorial</a>
             </tr>
-        </tbody>
         </tbody>
     </table>
 
