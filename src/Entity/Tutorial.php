@@ -45,7 +45,6 @@ class Tutorial
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'tutorialSteps')]
-    #[ORM\OrderBy(['imageName' => 'ASC'])]
     private Collection $steps;
 
     public function __construct()
@@ -140,11 +139,18 @@ class Tutorial
     }
 
     /**
+     * We wants to keep the array ordered. We want a lexicographic sort
      * @return Collection<int, Image>
      */
     public function getSteps(): Collection
     {
-        return $this->steps;
+        $stepsArray = $this->steps->toArray();
+        
+        // Lexicographic sort
+        usort($stepsArray, fn($a, $b) => strnatcmp($a->getImageName(), $b->getImageName()));
+        
+        // New collection
+        return new ArrayCollection($stepsArray);
     }
 
     public function addStep(Image $step): static
