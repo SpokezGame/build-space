@@ -12,6 +12,8 @@
     {{ include('tutorial/_form.html.twig') }}
     
     <br>
-
-    <a href="{{ path('app_library_show', {'id': library.id}) }}">Cancel</a>
+	
+	<button class="btn btn-danger">
+    	<a href="{{ path('app_library_show', {'id': library.id}) }}" class="no-decoration">Cancel</a>
+    </button>
 {% endblock %}

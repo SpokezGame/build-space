@@ -11,5 +11,7 @@
 
     {{ include('tutorial/_form.html.twig') }}
 
-    <a href="{{ path('app_tutorial_show', {'id' : theme.id}) }}">Cancel</a>
+	<button class="btn btn-danger">
+    	<a href="{{ path('app_tutorial_show', {'id' : theme.id}) }}">Cancel</a>
+    </button>
 {% endblock %}

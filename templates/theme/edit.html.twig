@@ -10,8 +10,10 @@
     {{ include('theme/_form.html.twig', {'button_label': 'Update'}) }}
 	
 	<br>
-
-    <a href="{{ path('app_member_show', {'id': theme.member.id}) }}">Cancel</a>
+	
+	<button class="btn btn-danger">
+    	<a href="{{ path('app_member_show', {'id': theme.member.id}) }}" class="no-decoration">Cancel</a>
+    </button>
     
     <br><br>
 

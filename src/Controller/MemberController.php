@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Image;
 use App\Entity\Member;
 use App\Repository\MemberRepository;
 
@@ -28,8 +29,17 @@ final class MemberController extends AbstractController
     #[Route('/{id}', name: 'app_member_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Member $member): Response
     {
+        // Image of a plus
+        $add = new Image();
+        $path = __DIR__ . "/../../public/images/fixtures/plus.png";
+        
+        $add->setImageName("plus.png");
+        $add->setImageSize(filesize($path));
+        $add->setUpdatedAt(new \DateTimeImmutable());
+        
         return $this->render('member/show.html.twig', [
-            'member' => $member
+            'member' => $member,
+            'add' => $add   
         ]);
     }
 }

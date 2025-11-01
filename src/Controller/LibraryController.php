@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Library;
 use App\Entity\Tutorial;
 use App\Form\LibraryType;
@@ -56,8 +57,18 @@ final class LibraryController extends AbstractController
     #[Route('/{id}', name: 'app_library_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Library $library): Response
     {
+        // Image of a plus
+        $add = new Image();
+        $path = __DIR__ . "/../../public/images/fixtures/plus.png";
+        
+        $add->setImageName("plus.png");
+        $add->setImageSize(filesize($path));
+        $add->setUpdatedAt(new \DateTimeImmutable());
+        
         return $this->render('library/show.html.twig', [
             'library' => $library,
+            'tutorials' => $library->getTutorials(),
+            'add' => $add
         ]);
     }
     

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Tutorial;
 use App\Entity\Theme;
 use App\Entity\Member;
@@ -102,8 +103,18 @@ final class ThemeController extends AbstractController
     #[Route('/{id}', name: 'app_theme_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Theme $theme): Response
     {
+        // Image of a plus
+        $add = new Image();
+        $path = __DIR__ . "/../../public/images/fixtures/plus.png";
+        
+        $add->setImageName("plus.png");
+        $add->setImageSize(filesize($path));
+        $add->setUpdatedAt(new \DateTimeImmutable());
+        
         return $this->render('theme/show.html.twig', [
             'theme' => $theme,
+            'tutorials' => $theme->getTutorials(),
+            'add' => $add
         ]);
     }
 

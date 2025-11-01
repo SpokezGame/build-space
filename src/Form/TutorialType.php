@@ -32,7 +32,7 @@ class TutorialType extends AbstractType
                 'required' => false
             ])
             ->add('steps', FileType::class, [
-                'label' => "<br> Steps of the tutorial <br>",
+                'label' => "<br> Steps of the tutorial &nbsp",
                 'mapped' => false,
                 'label_html' => true,
                 'multiple' => true,      

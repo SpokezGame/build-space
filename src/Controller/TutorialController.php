@@ -124,12 +124,25 @@ final class TutorialController extends AbstractController
         return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);
     }
     
-    #[Route('/tutorial/{id}/image/remove', requirements: ['id' => '\d+'], name: 'app_tutorial_remove_image')]
-    public function removeImage(Image $image, EntityManagerInterface $entityManager)
+    #[Route('/tutorial/step/{id}/remove', requirements: ['id' => '\d+'], name: 'app_tutorial_remove_step')]
+    public function removeStep(Image $image, EntityManagerInterface $entityManager)
     {
         $tutorial = $image->getTutorialSteps();
         $tutorial->removeStep($image);
         $entityManager->remove($image);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_tutorial_edit', ['id' => $tutorial->getId()]);
+    }
+    
+    #[Route('/tutorial/{id}/step/remove/all', requirements: ['id' => '\d+'], name: 'app_tutorial_remove_all_steps')]
+    public function removeAllSteps(Tutorial $tutorial, EntityManagerInterface $entityManager)
+    {
+        foreach ($tutorial->getSteps() as $step) {
+            $tutorial->removeStep($step);
+            $entityManager->remove($step);
+        }
+        
         $entityManager->flush();
         
         return $this->redirectToRoute('app_tutorial_edit', ['id' => $tutorial->getId()]);

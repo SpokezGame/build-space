@@ -3,21 +3,66 @@
 {% block title %}{{ member }}'s page{% endblock %}
 
 {% block main %}
-    <h1>{{ member }}'s page</h1>
+	<div style="text-align: center;">
+    	<h1>{{ member }}'s page</h1>
+    </div>
 	
-	<h3>Themes</h3>
+	<h2>Themes</h2>
+	
+	<br>
+	
     {% for theme in member.themes %}
     	{% if theme.published %}
-    		<a href="{{ path("app_theme_show", {'id': theme.id}) }}">{{ theme }}</a>
+           	<div class="tuto-card">
+            	<a href="{{ path("app_theme_show", {'id': theme.id}) }}">
+                	<div class="img-crop">
+            			<img
+            			type="image" 
+                        src="{{ vich_uploader_asset((theme.tutorials|first).imageBuild, 'imageFile') }}" 
+                        alt="Image of the symbol plus" 
+                        class="img-fluid"
+                    	/>
+                	</div>
+                	<div class="tuto-name">
+                		<h5> {{ theme }} </h5>
+                	</div>
+            	</a>
+            </div>
+
     		<br>
     	{% endif %}
     {% endfor %}
     
-    <a href="{{ path("app_theme_new", {'id': member.id}) }}">Add a new theme</a>
+    <div class="tuto-card">
+    	<a href="{{ path("app_theme_new", {'id': member.id}) }}">
+        	<div class="img-crop">
+    			<img
+    			type="image" 
+                src="{{ vich_uploader_asset(add, 'imageFile') }}" 
+                alt="Image of the symbol plus" 
+                class="img-fluid"
+            	/>
+        	</div>
+        	<div class="tuto-name">
+        		<h5> New theme </h5>
+        	</div>
+    	</a>
+    </div>
     
-	<h3>Library</h3>
-	<a href="{{ path("app_library_show", {'id': member.library.id}) }}" >{{ member }}'s library</a>
+    <br><br>
+    
+	<h2>Library</h2>
+	
 	<br>
-	<a href="{{ path('app_member_index') }}">Back</a>
+	
+	<button class="btn btn-primary">
+		<a href="{{ path("app_library_show", {'id': member.library.id}) }}" class="no-decoration"><h4>{{ member }}'s library</h4></a>
+	</button>
+	
+	<br><br><br>
+	
+	<button class="btn btn-info">
+		<a href="{{ path('app_member_index') }}" class="no-decoration"><h5>Back</h5></a>
+	</button>
     
 {% endblock %}

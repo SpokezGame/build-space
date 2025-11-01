@@ -3,16 +3,37 @@
     
     <br>
     
-    {% for step in tutorial.steps %}
-        <div class="step-image">
-      		<img 
-                src="{{ vich_uploader_asset(step, 'imageFile') }}" 
-                alt="{{ step.id }}" 
-                class="img-fluid rounded"
-            	style="max-width: 80%;"/>
-            <a href="{{ path('app_tutorial_remove_image', {'id': step.id}) }}" class="btn btn-danger">Delete step</a>
-        </div>
-    {% endfor %}
+    <div class="img-row">
+        {% for step in tutorial.steps %}
+            <div class="tuto-card">
+            	<div class="img-crop">
+        			<img
+        			type="image" 
+                    src="{{ vich_uploader_asset(step, 'imageFile') }}" 
+                    alt="{{ step.id }}" 
+                    class="img-fluid"
+                	/>
+            	</div>
+            	<div class="tuto-name">
+            		<button class="btn btn-danger step-delete">
+                		<a href="{{ path('app_tutorial_remove_step', {'id': step.id}) }}" class="no-decoration">Delete step</a>
+                	</button>
+            	</div>
+            </div>
+       
+        {% endfor %}
+    </div>
+    
+    {% if tutorial.id %}
+    
+        <br><br>
+        
+    	<button class="btn btn-danger step-delete">
+    		<a href="{{ path('app_tutorial_remove_all_steps', {'id': tutorial.id}) }}" class="no-decoration">Delete all steps</a>
+    	</button>
+    	
+    	<br>
+	{% endif %}
     
     {% if button_label|default(null) %}
     	<br>

@@ -31,6 +31,29 @@
     padding-top: 2%;
 }
 
+.step-image img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    object-position: center;
+    flex: 0 0 auto;
+}
+
+.step-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-delete {
+    width: fit-content;
+    display: inline-block;
+    color: white !important;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+
 .img-row {
   display: flex;
   flex-wrap: wrap;

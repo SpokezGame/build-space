@@ -1,30 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends 'tutorial/index.html.twig' %}
 
-{% block title %}Library{% endblock %}
+{% block list_tutorials_header %}
 
-{% block main %}
-    <h1>Library</h1>
+    <div style="text-align: center;">
+    	<h1>Library</h1>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ library.id }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ library.member }}</td>
-            </tr>
-            <tr>
-            	<th>Tutorials</th>
-            	{% for tutorial in library.tutorials %}
-            		<td><a href="{{ path("app_library_tutorial_show", {'library_id': library.id, 'tutorial_id': tutorial.id}) }}">{{ tutorial }}</a></td>
-            	{% endfor %}
-            	<td><a href="{{ path("app_tutorial_new", {'id': library.id}) }}">Create a new tutorial</a>
-            </tr>
-        </tbody>
-    </table>
+{% endblock %}
 
-    <a href="{{ path('app_member_show', {'id': library.member.id}) }}">Back</a>
+{% block list_tutorials_footer %}
+
+	<br><br>
+	
+  	<div class="tuto-card">
+    	<a href="{{ path("app_tutorial_new", {'id': library.id}) }}">
+        	<div class="img-crop">
+    			<img
+    			type="image" 
+                src="{{ vich_uploader_asset(add, 'imageFile') }}" 
+                alt="Image of the symbol plus" 
+                class="img-fluid"
+            	/>
+        	</div>
+        	<div class="tuto-name">
+        		<h5> New tutorial </h5>
+        	</div>
+    	</a>
+    </div>
+    
+    <br>
+    <br>
+
+	<button class="btn btn-info">
+    	<a href="{{ path('app_member_show', {'id': library.member.id}) }}" class="no-decoration"><h5>Back</h5></a>
+    </button>
 
 {% endblock %}
