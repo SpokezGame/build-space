@@ -19,30 +19,38 @@
             </div>
     	</div>
     	
-    	<ul>
-            <li> Name : {{ tutorial.name }} </li>
-            <li> Author : {{ tutorial.library.member }} </li>
-            <li> Description : {{ tutorial.description }}</li>
-    		<li> Steps : 
-    		{% for step in tutorial.steps %}
-    			<div class="step-image" style="text-align: center;">
-        			<img 
-                        src="{{ vich_uploader_asset(step, 'imageFile') }}" 
-                        alt="{{ step.id }}" 
-                        class="img-fluid rounded"
-                        style="max-width: 60%;"
-                    />
-                </div>
-    		{% endfor %}
-    		</li>
-        </ul>
-    
+    	<br>
+    	
+    	<div style="text-align: center;">
+            <h3>Author :</h3> <h5> {{ tutorial.library.member }}</h5>
+            <h3>Description :</h3> <h5> {{ tutorial.description }}</h5>
+        </div>
+        
+        <br>
+        
+    	<h3>Steps :</h3> 
+    		 
+		{% for step in tutorial.steps %}
+			<div class="step-image" style="text-align: center;">
+    			<img 
+                    src="{{ vich_uploader_asset(step, 'imageFile') }}" 
+                    alt="{{ step.id }}" 
+                    class="img-fluid rounded"
+                    style="max-width: 60%;"
+                />
+            </div>
+		{% endfor %}
+    		
     {% endblock %}
 	
 	{% block tutorialshow_footer %}
-	
-    	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
-        <a href="{{ path('app_tutorial_index') }}">Back</a>
+		<button class="btn btn-info">
+    		<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
+    	</button>
+    	
+    	<button class="btn btn-info">
+        	<a href="{{ path('app_tutorial_index') }}" class="no-decoration"><h5>Back</h5></a>
+        </button>
     
     {% endblock %}
 	

@@ -6,6 +6,11 @@
 {% endblock %}
 	
 {% block tutorialshow_footer %}
-	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
-    <a href="{{ path('app_theme_show', {'id': theme.id}) }}">Back to {{ theme }} theme</a>
+	<button class="btn btn-info">
+		<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
+	</button>
+	
+	<button class="btn btn-info">
+    	<a href="{{ path('app_theme_show', {'id': theme.id}) }}" class="no-decoration"><h5>Back to {{ theme }} theme</h5></a>
+    </button>
 {% endblock %} {# body #} 

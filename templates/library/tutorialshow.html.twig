@@ -1,6 +1,11 @@
 {% extends 'tutorial/show.html.twig' %}
 
 {% block tutorialshow_footer %}
-	<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a>
-    <a href="{{ path('app_library_show', {'id': tutorial.library.id}) }}">Back to {{ tutorial.library.member }}'s library</a>
+	<button class="btn btn-info">
+		<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
+	</button>
+	
+	<button class="btn btn-info">
+    	<a href="{{ path('app_library_show', {'id': tutorial.library.id}) }}" class="no-decoration"><h5>Back to {{ tutorial.library.member }}'s library</h5></a>
+    </button>
 {% endblock %} {# body #} 

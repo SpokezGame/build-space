@@ -2,14 +2,37 @@
 
 {% block main %}
 	{# Show all tutorials #}
-	<h1>All tutorials</h1>
 	
-	<ul>
-        {% for tutorial in tutorials %}
-        
-        	<li> <a href="{{ path('app_tutorial_show', {'id': tutorial.id}) }}"> {{ tutorial.name }} </a>&nbsp &nbsp &nbsp &nbsp<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}">Edit</a> </li>
-       
-        {% endfor %}
-    </ul>
+	{% block list_tutorials_header %}
+    	<div style="text-align: center;">
+    		<h1>All tutorials</h1>
+    	</div>
+	{% endblock %}
+	
+	<br>
+	
+	{% block list_tutorials %}
+    	<div class="img-row">
+            {% for tutorial in tutorials %}
+            
+                <div class="tuto-card">
+                	<a href="{{ path("app_tutorial_show", {'id': tutorial.id}) }}">
+                    	<div class="img-crop">
+                			<img
+                			type="image" 
+                            src="{{ vich_uploader_asset(tutorial.imageBuild, 'imageFile') }}" 
+                            alt="{{ tutorial.name }}" 
+                            class="img-fluid"
+                        	/>
+                    	</div>
+                    	<div class="tuto-name">
+                    		<h5> {{ tutorial }} </h5>
+                    	</div>
+                	</a>
+                </div>
+           
+            {% endfor %}
+        </div>
+    {% endblock %}
 	
 {% endblock %} {# body #} 
