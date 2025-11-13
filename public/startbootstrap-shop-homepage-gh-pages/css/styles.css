@@ -12,7 +12,21 @@
  */
  
  /* Custom preset */
+ 
+@font-face {
+  font-family: 'Minecraft';
+  src: url("../../fonts/Minecraft.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
+
+* {
+  font-family: "Minecraft", sans-serif !important;
+}
+
+ 
 #main_content {
 	background-color: #F5F5F5;
 	width: 75%;
@@ -2953,19 +2967,19 @@ textarea.form-control-lg {
 
 .btn-primary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #0d6efd;
-  --bs-btn-border-color: #0d6efd;
+  --bs-btn-bg: #916d50;
+  --bs-btn-border-color: #4d3424;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #0b5ed7;
-  --bs-btn-hover-border-color: #0a58ca;
+  --bs-btn-hover-bg: #54473d;
+  --bs-btn-hover-border-color: #4d3424;
   --bs-btn-focus-shadow-rgb: 49, 132, 253;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #0a58ca;
-  --bs-btn-active-border-color: #0a53be;
+  --bs-btn-active-bg: #54473d;
+  --bs-btn-active-border-color: #4d3424;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #0d6efd;
-  --bs-btn-disabled-border-color: #0d6efd;
+  --bs-btn-disabled-bg: #54473d;
+  --bs-btn-disabled-border-color: #4d3424;
 }
 
 .btn-secondary {
@@ -3003,20 +3017,20 @@ textarea.form-control-lg {
 }
 
 .btn-info {
-  --bs-btn-color: #000;
-  --bs-btn-bg: #0dcaf0;
-  --bs-btn-border-color: #0dcaf0;
-  --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #31d2f2;
-  --bs-btn-hover-border-color: #25cff2;
-  --bs-btn-focus-shadow-rgb: 11, 172, 204;
-  --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #3dd5f3;
-  --bs-btn-active-border-color: #25cff2;
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #7fba89;
+  --bs-btn-border-color: #398743;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #436946;
+  --bs-btn-hover-border-color: #398743;
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #436946;
+  --bs-btn-active-border-color: #398743;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #0dcaf0;
-  --bs-btn-disabled-border-color: #0dcaf0;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #08CF15;
+  --bs-btn-disabled-border-color: #398743;
 }
 
 .btn-warning {

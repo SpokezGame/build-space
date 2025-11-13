@@ -66,6 +66,12 @@ class AppFixtures extends Fixture
             unlink($file);
         }
         
+        // Copy the the plus image file
+        $source = __DIR__ . "/../../public/images/fixtures/plus.png";
+        $destination = __DIR__ . "/../../public/images/screens/plus.png";
+        copy($source, $destination);
+        
+        
         //  Loading of members
         foreach ($this->membersGenerator() as [$email, $plainPassword, $name]) {
             $user = new Member();

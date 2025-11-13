@@ -39,7 +39,7 @@ final class MemberController extends AbstractController
         
         return $this->render('member/show.html.twig', [
             'member' => $member,
-            'add' => $add   
+            'add' => $add
         ]);
     }
 }

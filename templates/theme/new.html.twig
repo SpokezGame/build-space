@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Theme{% endblock %}
-
 {% block main %}
     <h1>Create new Theme</h1>
 
@@ -11,5 +9,5 @@
     
     <br>
 
-    <a href="{{ path('app_member_show', {'id': member.id}) }}">Cancel</a>
+    <a href="{{ path('app_member_show', {'id': member.id}) }}" class="btn btn-danger">Cancel</a>
 {% endblock %}

@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ member }}'s page{% endblock %}
-
 {% block main %}
 	<div style="text-align: center;">
     	<h1>{{ member }}'s page</h1>
@@ -11,27 +9,33 @@
 	
 	<br>
 	
-    {% for theme in member.themes %}
-    	{% if theme.published %}
-           	<div class="tuto-card">
-            	<a href="{{ path("app_theme_show", {'id': theme.id}) }}">
-                	<div class="img-crop">
-            			<img
-            			type="image" 
-                        src="{{ vich_uploader_asset((theme.tutorials|first).imageBuild, 'imageFile') }}" 
-                        alt="Image of the symbol plus" 
-                        class="img-fluid"
-                    	/>
-                	</div>
-                	<div class="tuto-name">
-                		<h5> {{ theme }} </h5>
-                	</div>
-            	</a>
-            </div>
-
-    		<br>
-    	{% endif %}
-    {% endfor %}
+	<div class="img-row">
+    	{% for theme in member.themes %}
+        	{% if theme.published %}
+               	<div class="tuto-card">
+                	<a href="{{ path("app_theme_show", {'id': theme.id}) }}">
+                    	<div class="img-crop">
+                			<img
+                			type="image" 
+                            src="{{ vich_uploader_asset((theme.tutorials|first).imageBuild, 'imageFile') }}" 
+                            alt="Image of the symbol plus" 
+                            class="img-fluid"
+                        	/>
+                    	</div>
+                    	<div class="tuto-name">
+                    		<h5> {{ theme }} </h5>
+                    	</div>
+                	</a>
+                </div>
+    
+        		<br>
+        	{% endif %}
+        {% endfor %}
+    </div>
+    
+    <br><br>
+    
+    {% dump(add) %}
     
     <div class="tuto-card">
     	<a href="{{ path("app_theme_new", {'id': member.id}) }}">
@@ -56,7 +60,7 @@
 	<br>
 	
 	<button class="btn btn-primary">
-		<a href="{{ path("app_library_show", {'id': member.library.id}) }}" class="no-decoration"><h4>{{ member }}'s library</h4></a>
+		<a href="{{ path("app_library_show", {'id': member.library.id}) }}" class="no-decoration"><h5>{{ member }}'s library</h5></a>
 	</button>
 	
 	<br><br><br>

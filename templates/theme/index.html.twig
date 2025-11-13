@@ -1,33 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Theme index{% endblock %}
-
 {% block main %}
     <h1>Theme index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    
+    <br>
+	
+	<div class="img-row">
         {% for theme in themes %}
-            <tr>
-                <td>{{ theme.id }}</td>
-                <td>{{ theme.name }}</td>
-                <td>
-                    <a href="{{ path('app_theme_show', {'id': theme.id}) }}">show</a>
-                    <a href="{{ path('app_theme_edit', {'id': theme.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+        	{% if theme.published %}
+               	<div class="tuto-card">
+                	<a href="{{ path("app_theme_show", {'id': theme.id}) }}">
+                    	<div class="img-crop">
+                			<img
+                			type="image" 
+                            src="{{ vich_uploader_asset((theme.tutorials|first).imageBuild, 'imageFile') }}" 
+                            alt="Image of the symbol plus" 
+                            class="img-fluid"
+                        	/>
+                    	</div>
+                    	<div class="tuto-name">
+                    		<h5> {{ theme }} </h5>
+                    	</div>
+                	</a>
+                </div>
+    
+        		<br>
+        	{% endif %}
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
+    
+    <br>
+    
+    <button class="btn btn-info">
+    	<a href="{{ path('index') }}" class="no-decoration"><h5>Back</h5></a>
+    </button>
+    
 {% endblock %}
