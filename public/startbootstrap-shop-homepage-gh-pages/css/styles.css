@@ -26,6 +26,14 @@
   font-family: "Minecraft", sans-serif !important;
 }
 
+.logo {
+	width: 20%;
+	height: 10%;
+}
+
+.logo img {
+	width: 100%;
+}
  
 #main_content {
 	background-color: #F5F5F5;
