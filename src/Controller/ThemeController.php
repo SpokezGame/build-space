@@ -38,6 +38,8 @@ final class ThemeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($theme);
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The theme has been created.');
 
             return $this->redirectToRoute('app_member_show', ['id' => $member->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -62,6 +64,8 @@ final class ThemeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($todo);
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The theme has been created.');
             
             return $this->redirectToRoute('app_theme_show',
                 ['id' => $theme->getId()],
@@ -126,6 +130,8 @@ final class ThemeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The theme has been modified.');
 
             return $this->redirectToRoute('app_member_show', ['id' => $theme->getMember()->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -142,6 +148,8 @@ final class ThemeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$theme->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($theme);
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The theme has been deleted.');
         }
 
         return $this->redirectToRoute('app_member_show', ['id' => $theme->getMember()->getId()], Response::HTTP_SEE_OTHER);

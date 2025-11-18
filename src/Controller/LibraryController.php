@@ -41,6 +41,8 @@ final class LibraryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($library);
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The library has been created.');
 
             return $this->redirectToRoute('app_library_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -108,6 +110,8 @@ final class LibraryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The library has been modified.');
 
             return $this->redirectToRoute('app_library_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -127,6 +131,7 @@ final class LibraryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$library->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($library);
             $entityManager->flush();
+            $this->addFlash('message', 'The library has been deleted.');
         }
 
         return $this->redirectToRoute('app_tutorial_library_index', [], Response::HTTP_SEE_OTHER);

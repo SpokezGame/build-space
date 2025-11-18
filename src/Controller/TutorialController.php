@@ -58,6 +58,8 @@ final class TutorialController extends AbstractController
             $entityManager->persist($tutorial);
             $entityManager->flush();
             
+            $this->addFlash('message', 'The tutorial has been created.');
+            
             return $this->redirectToRoute('app_library_show', ['id' => $library->getId()], Response::HTTP_SEE_OTHER);
         }
         
@@ -101,6 +103,8 @@ final class TutorialController extends AbstractController
             
             $entityManager->flush();
             
+            $this->addFlash('message', 'The tutorial has been modified.');
+            
             return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);
         }
         
@@ -119,6 +123,8 @@ final class TutorialController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$tutorial->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($tutorial);
             $entityManager->flush();
+            
+            $this->addFlash('message', 'The tutorial has been deleted.');
         }
         
         return $this->redirectToRoute('app_library_show', ['id' => $tutorial->getLibrary()->getId()], Response::HTTP_SEE_OTHER);

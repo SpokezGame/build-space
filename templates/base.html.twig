@@ -19,15 +19,43 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         {{ render_bootstrap_menu('main') }}
+                        {% if app.user %}
+                            {{ render_bootstrap_menu('account') }}
+                        {% else %}
+                            {{ render_bootstrap_menu('anonymousaccount') }}
+                        {% endif %} {# app.user #}
                     </ul>
                 </div>
             </div>
         </nav>
-        {% endblock %} {# menu #}   
+        {% endblock %} {# menu #}
     
         {% block body %}
         	
         	<div id="main_content">
+                {% block alerts %}
+                    {# Borrowed from the demo app :
+                       https://github.com/symfony/demo/blob/v2.4.0/templates/base.html.twig #}
+                    {#
+                       The check is needed to prevent starting the session when looking for "flash messages":
+                       https://symfony.com/doc/current/session.html#avoid-starting-sessions-for-anonymous-users
+                    #}
+                    {% if app.request.hasPreviousSession %}
+                       <div class="messages">
+                          {% for type, messages in app.flashes %}
+                             {% for message in messages %}
+                                {# Bootstrap alert, see https://getbootstrap.com/docs/3.4/components/#alerts #}
+                                {%if type == 'error'%} {% set type = 'danger' %} {%endif%}
+                                {%if type == 'message'%} {% set type = 'info' %} {%endif%}
+                                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                                    <div>{{ message|trans }}</div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'action.close'|trans }}"></button>
+                                </div>
+                             {% endfor %}
+                          {% endfor %}
+                       </div> {# .messages #}
+                    {% endif %}
+                {% endblock %} {# alerts #}
         	    {% block main %}{% endblock %}
         	</div>
         

@@ -11,3 +11,14 @@ bootstrap_menu:
         themes:
           label: 'Themes'
           route: 'app_theme_index'
+    anonymousaccount:
+      items:
+        login:
+          label: 'Login'
+          route: 'app_login'
+    account:
+      items:
+        logout:
+          label: 'Logout'
+          route: 'app_logout'
+          roles: [ 'ROLE_USER' ]
