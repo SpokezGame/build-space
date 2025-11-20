@@ -27,11 +27,11 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     {
         yield ["Fantasy House", "spokez", "A cozy magical dwelling with enchanting details and mystical charm. It's perfect for adventurers seeking comfort and wonder.", "Fantasy House.jpg", 21];
         yield ["Well", "spokez", "A rustic stone well that brings life and realism to any village or medieval courtyard.", "Well.png", 5];
-        yield ["Cupboard", "lyanou", "A charming wooden cupboard with fine detailing, a small but elegant touch of homely design.", "Cupboard.jpg", 7];
-        yield ["Field", "spokez", "A peaceful stretch of green farmland, ideal for crops, animals, or a tranquil countryside vibe.", "Field.jpg", 0];
-        yield ["Clock", "lyanou", "An ornate clock structure showcasing craftsmanship and precision, time stands still in its beauty.", "Clock.jpeg", 0];
-        yield ["Pool table", "lyanou", "A detailed recreation of a billiards table, perfect for adding fun and sophistication to any interior.", "Pool table.jpg", 0];
-        yield ["Chair", "lyanou", "A stylish, sturdy chair design, simple yet elegant, completing any room or outdoor space.", "Chair.png", 0];
+        yield ["Cupboard", "lyanou", "A charming wooden cupboard with fine detailing, a small but elegant touch of homely design.", "Cupboard.png", 7];
+        yield ["Field", "spokez", "A peaceful stretch of green farmland, ideal for crops, animals, or a tranquil countryside vibe.", "Field.png", 8];
+        yield ["Clock", "lyanou", "An ornate clock structure showcasing craftsmanship and precision, time stands still in its beauty.", "Clock.png", 7];
+        yield ["Pool table", "lyanou", "A detailed recreation of a billiards table, perfect for adding fun and sophistication to any interior.", "Pool table.png", 6];
+        yield ["Chair", "lyanou", "A stylish, sturdy chair design, simple yet elegant, completing any room or outdoor space.", "Chair.png", 5];
     }
     
     /**
