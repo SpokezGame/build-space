@@ -14,9 +14,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/image')]
 final class ImageController extends AbstractController
 {
+    /**
+     * Access only for admin
+     */
     #[Route(name: 'app_image_index', methods: ['GET'])]
     public function index(ImageRepository $imageRepository): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN'))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         return $this->render('image/index.html.twig', [
             'images' => $imageRepository->findAll(),
         ]);
@@ -41,10 +48,17 @@ final class ImageController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
+    /**
+     * Access only for admin
+     */
     #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
     public function show(Image $image): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN'))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         return $this->render('image/show.html.twig', [
             'image' => $image,
         ]);

@@ -11,7 +11,7 @@
 	
 	<div class="img-row">
     	{% for theme in member.themes %}
-        	{% if theme.published %}
+            {% if is_granted('ROLE_ADMIN') or theme.published or (app.user and app.user.id == member.id) %}
                	<div class="tuto-card">
                 	<a href="{{ path("app_theme_show", {'id': theme.id}) }}">
                     	<div class="img-crop">
@@ -37,23 +37,27 @@
     
     {% dump(add) %}
     
-    <div class="tuto-card">
-    	<a href="{{ path("app_theme_new", {'id': member.id}) }}">
-        	<div class="img-crop">
-    			<img
-    			type="image" 
-                src="{{ vich_uploader_asset(add, 'imageFile') }}" 
-                alt="Image of the symbol plus" 
-                class="img-fluid"
-            	/>
-        	</div>
-        	<div class="tuto-name">
-        		<h5> New theme </h5>
-        	</div>
-    	</a>
-    </div>
+    {% if is_granted('ROLE_ADMIN') or (app.user and app.user.id == member.id) %}
+        <div class="tuto-card">
+        	<a href="{{ path("app_theme_new", {'id': member.id}) }}">
+            	<div class="img-crop">
+        			<img
+        			type="image" 
+                    src="{{ vich_uploader_asset(add, 'imageFile') }}" 
+                    alt="Image of the symbol plus" 
+                    class="img-fluid"
+                	/>
+            	</div>
+            	<div class="tuto-name">
+            		<h5> New theme </h5>
+            	</div>
+        	</a>
+        </div>
+        <br><br>
+        
+    {% endif %}
     
-    <br><br>
+
     
 	<h2>Library</h2>
 	

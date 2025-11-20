@@ -22,7 +22,7 @@ final class LibraryController extends AbstractController
      */
     #[Route(name: 'app_library_index', methods: ['GET'])]
     public function index(LibraryRepository $libraryRepository): Response
-    {
+    {   
         return $this->render('library/index.html.twig', [
             'libraries' => $libraryRepository->findAll(),
         ]);
@@ -30,10 +30,15 @@ final class LibraryController extends AbstractController
     
     /*
      * Create a Library entity
+     * Only for admin
      */
     #[Route('/new', name: 'app_library_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN'))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $library = new Library();
         $form = $this->createForm(LibraryType::class, $library);
         $form->handleRequest($request);
@@ -89,10 +94,6 @@ final class LibraryController extends AbstractController
                 throw $this->createNotFoundException("Couldn't find such a tutorial in this library!");
             }
             
-            // if(! $library->isPublished()) {
-            //   throw $this->createAccessDeniedException("You cannot access the requested ressource!");
-            //}
-            
             return $this->render('library/tutorialshow.html.twig', [
                 'tutorial' => $tutorial,
                 'library' => $library
@@ -105,6 +106,10 @@ final class LibraryController extends AbstractController
     #[Route('/{id}/edit', name: 'app_library_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Library $library, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $library->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $form = $this->createForm(LibraryType::class, $library);
         $form->handleRequest($request);
 
@@ -128,6 +133,10 @@ final class LibraryController extends AbstractController
     #[Route('/{id}', name: 'app_library_delete', methods: ['POST'])]
     public function delete(Request $request, Library $library, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $library->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$library->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($library);
             $entityManager->flush();

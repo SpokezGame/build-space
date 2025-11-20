@@ -5,13 +5,32 @@
 
 <p>Here, you can find tutorials and tips on builds on the game Minecraft.</p>
 
-<a href="{{ path("app_tutorial_index") }}">View all tutorials here</a>
-<br>
-<a href="{{ path("app_member_index") }}">View all members here</a>
-<br>
-<a href="{{ path("app_theme_index") }}">View all themes here</a>
-<!-- <br>
-<a href="{{ path("app_library_index") }}">View all libraries here</a>
--->
+
+<div class="image-row">
+    <a href="{{ path("app_tutorial_index") }}">
+        <img
+        type="image" 
+        src="{{ vich_uploader_asset(tutorials, 'imageFile') }}" 
+        alt="Image of the symbol plus" 
+        class="img-fluid"
+        />
+    </a>
+    <a href="{{ path("app_member_index") }}">
+        <img
+        type="image" 
+        src="{{ vich_uploader_asset(members, 'imageFile') }}" 
+        alt="Image of the symbol plus" 
+        class="img-fluid"
+        />
+    </a>
+    <a href="{{ path("app_theme_index") }}">
+        <img
+        type="image" 
+        src="{{ vich_uploader_asset(themes, 'imageFile') }}" 
+        alt="Image of the symbol plus" 
+        class="img-fluid"
+        />
+    </a>
+</div>
 
 {% endblock %}

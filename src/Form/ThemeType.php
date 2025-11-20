@@ -20,7 +20,7 @@ class ThemeType extends AbstractType
         $builder
             ->add('name')
             ->add('member', null, ['disabled' => true])
-            ->add('published', CheckboxType::class)
+            ->add('published', CheckboxType::class, ['required' => false])
             ->add('tutorials',
                 null,
                 // options :

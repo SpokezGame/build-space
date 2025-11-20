@@ -33,10 +33,15 @@ final class TutorialController extends AbstractController
     
     /*
      * Create a Tutorial entity
+     * (ONLY FOR ADMIN)
      */
     #[Route('/new/{id}', name: 'app_tutorial_new', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Library $library): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN'))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $tutorial = new Tutorial();
         $tutorial->setLibrary($library);
         
@@ -87,6 +92,10 @@ final class TutorialController extends AbstractController
     #[Route('/{id}/edit', name: 'app_tutorial_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $tutorial->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $form = $this->createForm(TutorialType::class, $tutorial);
         $form->handleRequest($request);
         
@@ -120,6 +129,10 @@ final class TutorialController extends AbstractController
     #[Route('/{id}', name: 'app_tutorial_delete', methods: ['POST'])]
     public function delete(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $tutorial->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$tutorial->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($tutorial);
             $entityManager->flush();
@@ -133,6 +146,10 @@ final class TutorialController extends AbstractController
     #[Route('/tutorial/step/{id}/remove', requirements: ['id' => '\d+'], name: 'app_tutorial_remove_step')]
     public function removeStep(Image $image, EntityManagerInterface $entityManager)
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $image->getTutorialSteps()->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $tutorial = $image->getTutorialSteps();
         $tutorial->removeStep($image);
         $entityManager->remove($image);
@@ -144,6 +161,10 @@ final class TutorialController extends AbstractController
     #[Route('/tutorial/{id}/step/remove/all', requirements: ['id' => '\d+'], name: 'app_tutorial_remove_all_steps')]
     public function removeAllSteps(Tutorial $tutorial, EntityManagerInterface $entityManager)
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $tutorial->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         foreach ($tutorial->getSteps() as $step) {
             $tutorial->removeStep($step);
             $entityManager->remove($step);

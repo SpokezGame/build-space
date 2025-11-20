@@ -22,14 +22,41 @@ final class ThemeController extends AbstractController
     #[Route(name: 'app_theme_index', methods: ['GET'])]
     public function index(ThemeRepository $themeRepository): Response
     {
+        if($this->isGranted('ROLE_ADMIN')) {
+            $themes = $themeRepository->findAll();
+        } else if($this->isGranted('ROLE_Member')){
+            $publicThemes = $themeRepository->findBy(
+                [
+                    'published' => true,
+                ]);
+            $personalThemes = $themeRepository->findBy(
+                [
+                   'published' => false,
+                   'member' => $this->getUser(),
+                ]);
+            $themes = array_merge($publicThemes, $personalThemes);
+        } else {
+            $themes = $themeRepository->findBy(
+                [
+                    'published' => true,   
+                ]);
+        }
+        
         return $this->render('theme/index.html.twig', [
-            'themes' => $themeRepository->findBy(['published' => true]),
+            'themes' => $themes,
         ]);
     }
-
+    
+    /**
+     * Only for admin
+     **/
     #[Route('/new/{id}', name: 'app_theme_new', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Member $member): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $member->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $theme = new Theme();
         $theme->setMember($member);
         $form = $this->createForm(ThemeType::class, $theme);
@@ -54,15 +81,19 @@ final class ThemeController extends AbstractController
     #[Route('/newintheme/{id}', name: 'app_tutorial_newintheme', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function newInTheme(Request $request, EntityManagerInterface $entityManager, Theme $theme): Response
     {
-        $todo = new Tutorial();
-        // already set a theme, so as to not need add that field in the form (in TutorialType)
-        $todo->addTheme($theme);
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $theme->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
         
-        $form = $this->createForm(TutorialType::class, $todo);
+        $tutorial = new Tutorial();
+        // already set a theme, so as to not need add that field in the form (in TutorialType)
+        $tutorial->addTheme($theme);
+        
+        $form = $this->createForm(TutorialType::class, $tutorial);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($todo);
+            $entityManager->persist($tutorial);
             $entityManager->flush();
             
             $this->addFlash('message', 'The theme has been created.');
@@ -74,7 +105,7 @@ final class ThemeController extends AbstractController
         
         return $this->render('tutorial/newintheme.html.twig', [
             'theme' => $theme,
-            'todo' => $todo,
+            'tutorial' => $tutorial,
             'form' => $form,
         ]);
     }
@@ -93,10 +124,6 @@ final class ThemeController extends AbstractController
         if(! $theme->getTutorials()->contains($tutorial)) {
           throw $this->createNotFoundException("Couldn't find such a tutorial in this theme!");
         }
-
-        // if(! $theme->isPublished()) {
-        //   throw $this->createAccessDeniedException("You cannot access the requested ressource!");
-        //}
         
         return $this->render('theme/tutorialshow.html.twig', [
             'tutorial' => $tutorial,
@@ -107,6 +134,9 @@ final class ThemeController extends AbstractController
     #[Route('/{id}', name: 'app_theme_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Theme $theme): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $theme->getMember()->getId()) or $theme->isPublished())){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
         // Image of a plus
         $add = new Image();
         $path = __DIR__ . "/../../public/images/fixtures/plus.png";
@@ -125,6 +155,10 @@ final class ThemeController extends AbstractController
     #[Route('/{id}/edit', name: 'app_theme_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Theme $theme, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $theme->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $form = $this->createForm(ThemeType::class, $theme);
         $form->handleRequest($request);
 
@@ -145,6 +179,10 @@ final class ThemeController extends AbstractController
     #[Route('/{id}', name: 'app_theme_delete', methods: ['POST'])]
     public function delete(Request $request, Theme $theme, EntityManagerInterface $entityManager): Response
     {
+        if(!($this->isGranted('ROLE_ADMIN') or ($this->getUser() and $this->getUser()->getId() == $theme->getMember()->getId()))){
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$theme->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($theme);
             $entityManager->flush();

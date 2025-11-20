@@ -8,8 +8,10 @@
     <br>
 
     {{ include('tutorial/_form.html.twig') }}
+    
+    <br>
 
 	<button class="btn btn-danger">
-    	<a href="{{ path('app_tutorial_show', {'id' : theme.id}) }}">Cancel</a>
+    	<a href="{{ path('app_tutorial_show', {'id' : theme.id}) }}" class="no-decoration">Cancel</a>
     </button>
 {% endblock %}

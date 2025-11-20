@@ -21,7 +21,6 @@
   font-display: swap;
 }
 
-
 * {
   font-family: "Minecraft", sans-serif !important;
 }
@@ -33,6 +32,18 @@
 
 .logo img {
 	width: 100%;
+}
+
+.image-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 150px;
+}
+
+.image-row img {
+    max-height: 100px;
 }
  
 #main_content {

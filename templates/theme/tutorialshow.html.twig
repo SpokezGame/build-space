@@ -2,13 +2,20 @@
 
 {% block tutorialshow_header %}
 	{# Show the detail of a tutorial #}
-	<h3>Theme : {{ theme }}</h3>
+	<div style="text-align: center;">
+		<div style="border-style: solid; display:inline-block; padding: 5px;">
+			<h3>Theme : {{ theme }}</h3>
+		</div>
+	</div>
+	<br>
 {% endblock %}
 	
 {% block tutorialshow_footer %}
-	<button class="btn btn-info">
-		<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
-	</button>
+	{% if is_granted('ROLE_ADMIN') or (app.user and app.user.id == theme.member.id) %}
+		<button class="btn btn-info">
+			<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
+		</button>
+	{% endif %}
 	
 	<button class="btn btn-info">
     	<a href="{{ path('app_theme_show', {'id': theme.id}) }}" class="no-decoration"><h5>Back to {{ theme }} theme</h5></a>

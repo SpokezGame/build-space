@@ -44,9 +44,11 @@
     {% endblock %}
 	
 	{% block tutorialshow_footer %}
-		<button class="btn btn-info">
-    		<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
-    	</button>
+		{% if is_granted('ROLE_ADMIN') or (app.user and app.user.id == tutorial.library.member.id) %}
+    		<button class="btn btn-info">
+        		<a href="{{ path('app_tutorial_edit', {'id': tutorial.id}) }}" class="no-decoration"><h5>Edit</h5></a>
+        	</button>
+        {% endif %}
     	
     	<button class="btn btn-info">
         	<a href="{{ path('app_tutorial_index') }}" class="no-decoration"><h5>Back</h5></a>
