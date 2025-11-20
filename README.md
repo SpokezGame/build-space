@@ -8,6 +8,7 @@
 ## 4) Routes
 ## 5) Navigation
 ## 6) Account
+## 7) Remark
 
 # 1) Introduction
 
@@ -126,3 +127,7 @@ Be aware that when you're logged in to an admin account, you can do everything y
 A member can only create, edit or delete items (tutorials, themes) that they owned. Also, they can only see their own themes and published themes from other people. They can't see unpublished themes of other people.
 
 A not logged in account can only see published themes. And can't create anything, nor edit or delete something.
+
+# 7) Remark
+
+All the builds were made by me.
