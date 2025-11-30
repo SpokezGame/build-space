@@ -38,7 +38,7 @@ final class TutorialController extends AbstractController
     #[Route('/new/{id}', name: 'app_tutorial_new', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Library $library): Response
     {
-        if(!($this->isGranted('ROLE_ADMIN'))){
+        if(!($this->isGranted('ROLE_ADMIN') or $this->getUser())){
             return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
         }
         
